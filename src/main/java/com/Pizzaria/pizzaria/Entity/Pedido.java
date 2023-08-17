@@ -14,7 +14,7 @@ import org.hibernate.envers.Audited;
 @Table(name = "pedido",schema = "public")
 
 public class Pedido extends AbstractEntity  {
-    /*@OneToMany
+    @OneToMany
     @JoinColumn(name = "bebida",nullable = false)
     private Bebida bebida;
     @OneToMany
@@ -25,5 +25,5 @@ public class Pedido extends AbstractEntity  {
     private Funcionario funcionario;
     @OneToMany
     @JoinColumn(name = "cliente",nullable = false)
-    private Cliente cliente;*/
+    private Cliente cliente;
 }
