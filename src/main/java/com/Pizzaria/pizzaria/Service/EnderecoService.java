@@ -1,13 +1,10 @@
 package com.Pizzaria.pizzaria.Service;
 
 import com.Pizzaria.pizzaria.Entity.Endereco;
-import com.Pizzaria.pizzaria.Entity.Funcionario;
 import com.Pizzaria.pizzaria.Repository.EnderecoRepository;
-import com.Pizzaria.pizzaria.Repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
 @Service
@@ -23,11 +20,16 @@ public class EnderecoService {
         return this.Repository.save(cadastrar);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void atualizar(Long id, Endereco atualizar) {
-        final Endereco marcaBanco = this.Repository.findById(atualizar.getId()).orElse(null);
-        Assert.isTrue(marcaBanco.getId().equals(id) ,"Error id da URL diferente do body");
-        Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
-        this.Repository.save(atualizar);
+    public Endereco atualizar(Long id, Endereco enderecoAtualizado) {
+        Endereco enderecoExistente = Repository.findById(id).orElse(null);
+        if (enderecoExistente == null) {
+            return null;
+        } else {
+            enderecoExistente.setCliente(enderecoAtualizado.getCliente());
+            enderecoExistente.setRua(enderecoAtualizado.getRua());
+            enderecoExistente.setNumero(enderecoAtualizado.getNumero());
+            enderecoExistente.setBairro(enderecoAtualizado.getBairro());
+            return Repository.save(enderecoExistente);
+        }
     }
 }

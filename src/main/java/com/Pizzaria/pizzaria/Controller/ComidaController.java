@@ -1,10 +1,7 @@
 package com.Pizzaria.pizzaria.Controller;
 
-import com.Pizzaria.pizzaria.DTO.BebidaConverter;
-import com.Pizzaria.pizzaria.DTO.BebidaDTO;
 import com.Pizzaria.pizzaria.DTO.ComidaConverter;
 import com.Pizzaria.pizzaria.DTO.ComidaDTO;
-import com.Pizzaria.pizzaria.Entity.Bebida;
 import com.Pizzaria.pizzaria.Entity.Comida;
 import com.Pizzaria.pizzaria.Repository.ComidaRepository;
 import com.Pizzaria.pizzaria.Service.ComidaService;

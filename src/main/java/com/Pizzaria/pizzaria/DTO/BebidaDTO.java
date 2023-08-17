@@ -12,7 +12,6 @@ public class BebidaDTO {
 
     public BebidaDTO() {
     }
-
     public BebidaDTO(int tamanho, String sabor) {
         this.tamanho = tamanho;
         this.sabor = sabor;
