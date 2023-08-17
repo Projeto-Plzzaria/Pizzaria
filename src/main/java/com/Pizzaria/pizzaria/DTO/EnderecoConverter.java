@@ -1,7 +1,6 @@
 package com.Pizzaria.pizzaria.DTO;
 
 import com.Pizzaria.pizzaria.Entity.Cliente;
-import com.Pizzaria.pizzaria.Entity.Comida;
 import com.Pizzaria.pizzaria.Entity.Endereco;
 
 import java.util.List;

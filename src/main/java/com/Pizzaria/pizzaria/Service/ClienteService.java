@@ -23,11 +23,14 @@ public class ClienteService {
         return this.Repository.save(cadastrar);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void atualizar(Long id, Cliente atualizar) {
-        final Cliente marcaBanco = this.Repository.findById(atualizar.getId()).orElse(null);
-        Assert.isTrue(marcaBanco.getId().equals(id) ,"Error id da URL diferente do body");
-        Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
-        this.Repository.save(atualizar);
+    public Cliente atualizar(Long id, Cliente clienteAtualizado) {
+        Cliente clienteExistente = Repository.findById(id).orElse(null);
+        if (clienteExistente == null) {
+            return null;
+        } else {
+            clienteExistente.setNome(clienteAtualizado.getNome());
+            clienteExistente.setNumero(clienteAtualizado.getNumero());
+            return Repository.save(clienteExistente);
+        }
     }
 }

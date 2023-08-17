@@ -8,11 +8,14 @@ import com.Pizzaria.pizzaria.Service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@Controller
+@RequestMapping(value = "/api/Endereco")
 public class EnderecoController {
     @Autowired
     private EnderecoRepository Repository;

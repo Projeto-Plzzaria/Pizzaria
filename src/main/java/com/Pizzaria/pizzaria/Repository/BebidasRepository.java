@@ -1,7 +1,6 @@
 package com.Pizzaria.pizzaria.Repository;
 
 import com.Pizzaria.pizzaria.Entity.Bebida;
-import com.Pizzaria.pizzaria.Entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
