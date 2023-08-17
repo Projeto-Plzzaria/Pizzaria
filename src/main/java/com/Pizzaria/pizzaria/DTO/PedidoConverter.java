@@ -1,7 +1,12 @@
 package com.Pizzaria.pizzaria.DTO;
 
+import com.Pizzaria.pizzaria.Entity.Funcionario;
 import com.Pizzaria.pizzaria.Entity.Pedido;
 import com.Pizzaria.pizzaria.DTO.PedidoDTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class PedidoConverter {
 
     public static PedidoDTO toDTO(Pedido pedido) {
@@ -20,5 +25,10 @@ public class PedidoConverter {
         pedido.setFuncionario(pedidoDTO.getFuncionario());
         pedido.setCliente(pedidoDTO.getCliente());
         return pedido;
+    }
+    public static List<PedidoDTO> toDTOList(List<Pedido> funcionarios) {
+        return funcionarios.stream()
+                .map(PedidoConverter::toDTO)
+                .collect(Collectors.toList());
     }
 }
