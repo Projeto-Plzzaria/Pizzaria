@@ -12,7 +12,7 @@ import org.hibernate.envers.Audited;
 @Setter
 @Entity
 @Audited
-@AuditTable(value = "comidaAudited", schema = "audited")
+@AuditTable(value = "comidaAudited")
 @Table(name = "comida",schema = "public")
 public class Comida extends AbstractEntity  {
     @Column(name = "tamanho",nullable = false)

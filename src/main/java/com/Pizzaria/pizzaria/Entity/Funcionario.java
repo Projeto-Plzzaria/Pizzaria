@@ -11,13 +11,13 @@ import org.hibernate.envers.Audited;
 @Getter@Setter
 @Entity
 @Audited
-@AuditTable(value = "funcionarioAudited", schema = "audited")
-@Table(name = "funcionario",schema = "public")
+@AuditTable(value = "funcionarioAudited")
+@Table(name = "funcionario")
 public class Funcionario extends Pessoa {
 
-    @Column(name = "banco",nullable = false,length = 20)
+    @Column(name = "cargo",nullable = false,length = 20)
     private Cargo cargo;
-    @Column(name = "banco",nullable = false,length = 20)
+    @Column(name = "email",nullable = false,length = 20)
     private String Email;
 
 }

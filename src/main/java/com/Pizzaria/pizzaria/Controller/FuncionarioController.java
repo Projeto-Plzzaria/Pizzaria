@@ -1,8 +1,8 @@
 package com.Pizzaria.pizzaria.Controller;
 
-import com.Pizzaria.pizzaria.Entity.Cliente;
-import com.Pizzaria.pizzaria.Repository.ClienteRepository;
-import com.Pizzaria.pizzaria.Service.ClienteService;
+import com.Pizzaria.pizzaria.Entity.Funcionario;
+import com.Pizzaria.pizzaria.Repository.FuncionarioRepository;
+import com.Pizzaria.pizzaria.Service.FuncionarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;

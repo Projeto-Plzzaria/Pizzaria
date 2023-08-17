@@ -10,7 +10,7 @@ import org.hibernate.envers.Audited;
 @Setter
 @Entity
 @Audited
-@AuditTable(value = "enderecoAudited", schema = "audited")
+@AuditTable(value = "enderecoAudited")
 @Table(name = "endereco",schema = "public")
 
 public class Endereco extends AbstractEntity {

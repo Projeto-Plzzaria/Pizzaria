@@ -1,5 +1,7 @@
 package com.Pizzaria.pizzaria.Controller;
 
+import com.Pizzaria.pizzaria.DTO.BebidaConverter;
+import com.Pizzaria.pizzaria.DTO.BebidaDTO;
 import com.Pizzaria.pizzaria.Entity.Bebida;
 import com.Pizzaria.pizzaria.Repository.BebidasRepository;
 import com.Pizzaria.pizzaria.Service.BebidaService;
@@ -20,11 +22,21 @@ public class BebidaController {
     @Autowired
     private BebidaService Service;
 
+
+
     @GetMapping("/lista")
-    public ResponseEntity<List<Bebida>> lista(){
+    public ResponseEntity<List<BebidaDTO>> lista() {
+        List<Bebida> listaBebidas = Service.listartudo();
+        List<BebidaDTO> listaBebidasDTO = BebidaConverter.toDtoList(listaBebidas);
+        return ResponseEntity.ok(listaBebidasDTO);
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Bebida>> listas(){
         List<Bebida> listartudo = Service.listartudo();
         return ResponseEntity.ok(listartudo);
     }
+
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id){
         Bebida listarid = Repository.findById(id).orElse(null);
