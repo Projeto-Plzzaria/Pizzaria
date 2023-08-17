@@ -1,9 +1,8 @@
 package com.Pizzaria.pizzaria.Controller;
 
 import com.Pizzaria.pizzaria.Entity.Bebida;
-import com.Pizzaria.pizzaria.Entity.Cliente;
-import com.Pizzaria.pizzaria.Repository.ClienteRepository;
-import com.Pizzaria.pizzaria.Service.ClienteService;
+import com.Pizzaria.pizzaria.Repository.BebidasRepository;
+import com.Pizzaria.pizzaria.Service.BebidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,7 @@ import java.util.Optional;
 @RequestMapping(value = "/api/Bebida")
 public class BebidaController {
     @Autowired
-    private BebidaRepository Repository;
+    private BebidasRepository Repository;
     @Autowired
     private BebidaService Service;
 
@@ -55,7 +54,7 @@ public class BebidaController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Cliente> deletarId = Repository.findById(id);
+        Optional<Bebida> deletarId = Repository.findById(id);
         if (deletarId.isPresent()) {
             Repository.deleteById(id);
             return ResponseEntity.ok("Apagado com sucesso");

@@ -3,16 +3,20 @@ package com.Pizzaria.pizzaria.Entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 @Entity
 @Audited
-@AuditTable(value = "funcionarioAudited", schema = "audited")
-@Table(name = "funcionario",schema = "public")
+@AuditTable(value = "bebidaAudited", schema = "audited")
+@Table(name = "bebida",schema = "public")
 public class Bebida extends AbstractEntity {
     @Column(name = "tamanho",nullable = false)
+    @Getter @Setter
     private int tamanho;
     @Column(name = "sabor",nullable = false,length = 10)
+    @Getter @Setter
     private String sabor;
 }
