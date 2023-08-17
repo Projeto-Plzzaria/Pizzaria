@@ -38,26 +38,34 @@ public class BebidaController {
     }
 
     @GetMapping("/lista/id/{id}")
-    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id){
-        Bebida listarid = Repository.findById(id).orElse(null);
-        return listarid == null
-                ? ResponseEntity.badRequest().body(" <<ERRO>>: valor nao encontrado.")
-                : ResponseEntity.ok(listarid);
+    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+        Bebida bebida = Repository.findById(id).orElse(null);
+
+        if (bebida == null) {
+            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+        }
+
+        BebidaDTO bebidaDTO = BebidaConverter.toDto(bebida);
+
+        return ResponseEntity.ok(bebidaDTO);
     }
     @GetMapping("/lista/ativo/{ativo}")
-    public ResponseEntity<List<Bebida>> listaAtivo(@PathVariable boolean ativo) {
-        List<Bebida> listarAtivo = Repository.findByAtivo(ativo);
-        return ResponseEntity.ok(listarAtivo);
+    public ResponseEntity<List<BebidaDTO>> listaAtivo(@PathVariable boolean ativo) {
+        List<Bebida> listaAtivo = Repository.findByAtivo(ativo);
+        List<BebidaDTO> listaAtivoDTO = BebidaConverter.toDtoList(listaAtivo);
+
+        return ResponseEntity.ok(listaAtivoDTO);
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody Bebida cadastro){
-        try{
-            this.Service.cadastrar(cadastro);
+    public ResponseEntity<?> cadastrar(@RequestBody BebidaDTO cadastroDTO) {
+        try {
+            Bebida bebida = BebidaConverter.toEntity(cadastroDTO);
+            this.Service.cadastrar(bebida);
             return ResponseEntity.ok("Cadastro feito com sucesso");
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO:"+e.getMessage());
-        }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -75,10 +83,11 @@ public class BebidaController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar( @PathVariable Long id, @RequestBody Bebida atualizarId) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody BebidaDTO dto) {
         try {
-            this.Service.atualizar(id, atualizarId);
-            return ResponseEntity.ok().body(" atualizado com sucesso!");
+            Bebida bebidaAtualizada = BebidaConverter.toEntity(dto);
+            this.Service.atualizar(id, bebidaAtualizada);
+            return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
