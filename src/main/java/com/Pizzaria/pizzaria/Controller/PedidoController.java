@@ -1,5 +1,10 @@
 package com.Pizzaria.pizzaria.Controller;
 
+import com.Pizzaria.pizzaria.DTO.EnderecoConverter;
+import com.Pizzaria.pizzaria.DTO.EnderecoDTO;
+import com.Pizzaria.pizzaria.DTO.PedidoConverter;
+import com.Pizzaria.pizzaria.DTO.PedidoDTO;
+import com.Pizzaria.pizzaria.Entity.Endereco;
 import com.Pizzaria.pizzaria.Entity.Pedido;
 import com.Pizzaria.pizzaria.Repository.PedidoRepository;
 import com.Pizzaria.pizzaria.Service.PedidoService;
@@ -21,32 +26,43 @@ public class PedidoController {
         @Autowired
         private PedidoService Service;
 
-        @GetMapping("/lista")
-        public ResponseEntity<List<Pedido>> lista(){
+        @GetMapping("/listar")
+        public ResponseEntity<List<Pedido>> listar(){
         List<Pedido> listartudo = Service.listartudo();
         return ResponseEntity.ok(listartudo);
     }
-        @GetMapping("/lista/id/{id}")
-        public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id){
-        Pedido listarid = Repository.findById(id).orElse(null);
-        return listarid == null
-                ? ResponseEntity.badRequest().body(" <<ERRO>>: valor nao encontrado.")
-                : ResponseEntity.ok(listarid);
+    @GetMapping("/lista")
+    public ResponseEntity<List<PedidoDTO>> lista() {
+        List<Pedido> listas = Service.listartudo();
+        List<PedidoDTO> listasDTO = PedidoConverter.toDTOList(listas);
+        return ResponseEntity.ok(listasDTO);
     }
-        @GetMapping("/lista/ativo/{ativo}")
-        public ResponseEntity<List<Pedido>> listaAtivo(@PathVariable boolean ativo) {
-        List<Pedido> listarAtivo = Repository.findByAtivo(ativo);
-        return ResponseEntity.ok(listarAtivo);
-    }
+    @GetMapping("/lista/id/{id}")
+    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+        Pedido listaid = Repository.findById(id).orElse(null);
 
-        @PostMapping("/cadastrar")
-        public ResponseEntity<?> cadastrar(@RequestBody Pedido cadastro){
-        try{
+        if (listaid == null) {
+            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+        }
+
+        PedidoDTO listaDTO = PedidoConverter.toDTO(listaid);
+        return ResponseEntity.ok(listaDTO);
+    }
+    @GetMapping("/lista/ativo/{ativo}")
+    public ResponseEntity<List<PedidoDTO>> listaAtivo(@PathVariable boolean ativo) {
+        List<Pedido> listaAtivo = Repository.findByAtivo(ativo);
+        List<PedidoDTO> listaAtivoDTO = PedidoConverter.toDTOList(listaAtivo);
+        return ResponseEntity.ok(listaAtivoDTO);
+    }
+    @PostMapping("/cadastrar")
+    public ResponseEntity<?> cadastrar(@RequestBody PedidoDTO cadastroDTO) {
+        try {
+            Pedido cadastro = PedidoConverter.toEntity(cadastroDTO);
             this.Service.cadastrar(cadastro);
             return ResponseEntity.ok("Cadastro feito com sucesso");
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO:"+e.getMessage());
-        }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -63,11 +79,12 @@ public class PedidoController {
             return ResponseEntity.notFound().build();
         }
     }
-        @PutMapping("/put/id/{id}")
-        public ResponseEntity<?> atualizar( @PathVariable Long id, @RequestBody Pedido atualizarId) {
+    @PutMapping("/put/id/{id}")
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody PedidoDTO dto) {
         try {
-            this.Service.atualizar(id, atualizarId);
-            return ResponseEntity.ok().body(" atualizado com sucesso!");
+            Pedido Atualizado = PedidoConverter.toEntity(dto);
+            this.Service.atualizar(id, Atualizado);
+            return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
