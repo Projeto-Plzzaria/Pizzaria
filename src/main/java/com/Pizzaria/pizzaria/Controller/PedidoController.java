@@ -3,6 +3,7 @@ package com.Pizzaria.pizzaria.Controller;
 import com.Pizzaria.pizzaria.Entity.Cliente;
 import com.Pizzaria.pizzaria.Entity.Pedido;
 import com.Pizzaria.pizzaria.Repository.ClienteRepository;
+import com.Pizzaria.pizzaria.Repository.PedidoRepository;
 import com.Pizzaria.pizzaria.Service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;

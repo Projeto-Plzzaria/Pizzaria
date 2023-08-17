@@ -1,8 +1,6 @@
 package com.Pizzaria.pizzaria.Controller;
 
-import Fozesc.com.demo.Entity.Pessoa;
-import Fozesc.com.demo.Repository.PessoaRepository;
-import Fozesc.com.demo.Service.PessoaService;
+
 import com.Pizzaria.pizzaria.Entity.Cliente;
 import com.Pizzaria.pizzaria.Repository.ClienteRepository;
 import com.Pizzaria.pizzaria.Service.ClienteService;
