@@ -24,11 +24,15 @@ public class ComidaService {
         return this.Repository.save(cadastrar);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void atualizar(Long id, Comida atualizar) {
-        final Comida marcaBanco = this.Repository.findById(atualizar.getId()).orElse(null);
-        Assert.isTrue(marcaBanco.getId().equals(id) ,"Error id da URL diferente do body");
-        Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
-        this.Repository.save(atualizar);
+    public Comida atualizar(Long id, Comida comidaAtualizada) {
+        Comida comidaExistente = Repository.findById(id).orElse(null);
+        if (comidaExistente == null) {
+            return null;
+        } else {
+            comidaExistente.setTamanho(comidaAtualizada.getTamanho());
+            comidaExistente.setQidSabores(comidaAtualizada.getQidSabores());
+            comidaExistente.setAddIngrediente(comidaAtualizada.getAddIngrediente());
+            return Repository.save(comidaExistente);
+        }
     }
 }

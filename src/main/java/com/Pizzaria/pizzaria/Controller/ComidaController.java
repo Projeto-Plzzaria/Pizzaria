@@ -1,10 +1,12 @@
 package com.Pizzaria.pizzaria.Controller;
 
-import com.Pizzaria.pizzaria.Entity.Cliente;
+import com.Pizzaria.pizzaria.DTO.BebidaConverter;
+import com.Pizzaria.pizzaria.DTO.BebidaDTO;
+import com.Pizzaria.pizzaria.DTO.ComidaConverter;
+import com.Pizzaria.pizzaria.DTO.ComidaDTO;
+import com.Pizzaria.pizzaria.Entity.Bebida;
 import com.Pizzaria.pizzaria.Entity.Comida;
-import com.Pizzaria.pizzaria.Repository.ClienteRepository;
 import com.Pizzaria.pizzaria.Repository.ComidaRepository;
-import com.Pizzaria.pizzaria.Service.ClienteService;
 import com.Pizzaria.pizzaria.Service.ComidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,31 +28,49 @@ public class ComidaController {
     private ComidaService Service;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Comida>> lista(){
+    public ResponseEntity<List<ComidaDTO>> lista() {
+        List<Comida> listaComidas = Service.listartudo();
+        List<ComidaDTO> listaComidasDTO = ComidaConverter.toDtoList(listaComidas);
+        return ResponseEntity.ok(listaComidasDTO);
+    }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Comida>> listas(){
         List<Comida> listartudo = Service.listartudo();
         return ResponseEntity.ok(listartudo);
     }
+
     @GetMapping("/lista/id/{id}")
-    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id){
-        Comida listarid = Repository.findById(id).orElse(null);
-        return listarid == null
-                ? ResponseEntity.badRequest().body(" <<ERRO>>: valor nao encontrado.")
-                : ResponseEntity.ok(listarid);
-    }
-    @GetMapping("/lista/ativo/{ativo}")
-    public ResponseEntity<List<Comida>> listaAtivo(@PathVariable boolean ativo) {
-        List<Comida> listarAtivo = Repository.findByAtivo(ativo);
-        return ResponseEntity.ok(listarAtivo);
+    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+        Comida comida = Repository.findById(id).orElse(null);
+
+        if (comida == null) {
+            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+        }
+
+        ComidaDTO comidaDTO = ComidaConverter.toDto(comida);
+
+        return ResponseEntity.ok(comidaDTO);
     }
 
+    @GetMapping("/lista/ativo/{ativo}")
+    public ResponseEntity<List<ComidaDTO>> listaAtivo(@PathVariable boolean ativo) {
+        List<Comida> listaAtivo = Repository.findByAtivo(ativo);
+        List<ComidaDTO> listaAtivoDTO = ComidaConverter.toDtoList(listaAtivo);
+
+        return ResponseEntity.ok(listaAtivoDTO);
+    }
+
+
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody Comida cadastro){
-        try{
-            this.Service.cadastrar(cadastro);
+    public ResponseEntity<?> cadastrar(@RequestBody ComidaDTO cadastroDTO) {
+        try {
+            Comida comida = ComidaConverter.toEntity(cadastroDTO);
+            this.Service.cadastrar(comida);
             return ResponseEntity.ok("Cadastro feito com sucesso");
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO:"+e.getMessage());
-        }catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -68,10 +88,11 @@ public class ComidaController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar( @PathVariable Long id, @RequestBody Comida atualizarId) {
+    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody ComidaDTO dto) {
         try {
-            this.Service.atualizar(id, atualizarId);
-            return ResponseEntity.ok().body(" atualizado com sucesso!");
+            Comida comidaAtualizada = ComidaConverter.toEntity(dto);
+            this.Service.atualizar(id, comidaAtualizada);
+            return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
