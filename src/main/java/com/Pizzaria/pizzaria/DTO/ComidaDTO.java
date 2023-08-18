@@ -1,22 +1,25 @@
 package com.Pizzaria.pizzaria.DTO;
 
+import com.Pizzaria.pizzaria.Entity.Tamanho;
+import com.Pizzaria.pizzaria.Entity.TamanhoB;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 public class ComidaDTO {
     @Getter@Setter
-    private int tamanho;
+    private Tamanho tamanho;
+
     @Getter@Setter
-    private int qidSabores;
-    @Getter@Setter
-    private int addIngrediente;
+    private List<String> ingredientes;
+
 
     public ComidaDTO() {
     }
 
-    public ComidaDTO(int tamanho, int qidSabores, int addIngrediente) {
+    public ComidaDTO(Tamanho tamanho, List<String> ingredientes) {
         this.tamanho = tamanho;
-        this.qidSabores = qidSabores;
-        this.addIngrediente = addIngrediente;
+        this.ingredientes = ingredientes;
     }
 }

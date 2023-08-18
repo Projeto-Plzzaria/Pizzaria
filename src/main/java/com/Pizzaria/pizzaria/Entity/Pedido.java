@@ -26,4 +26,7 @@ public class Pedido extends AbstractEntity  {
     @OneToMany
     @JoinColumn(name = "cliente",nullable = false)
     private Cliente cliente;
+
+    @Column(name = "valor",nullable = false)
+    private Double valor;
 }
