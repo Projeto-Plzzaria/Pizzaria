@@ -8,6 +8,8 @@ import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -15,10 +17,9 @@ import org.hibernate.envers.Audited;
 @AuditTable(value = "comidaAudited")
 @Table(name = "comida",schema = "public")
 public class Comida extends AbstractEntity  {
-    @Column(name = "tamanho",nullable = false)
-    private int tamanho;
+    @Column(name = "tamanho",nullable = false,length = 10)
+    private Tamanho tamanho;
     @Column(name = "qidSabores",nullable = false,length = 50)
-    private int  qidSabores;
-    @Column(name = "addIngrediente",nullable = false,length = 50)
-    private int addIngrediente;
+    private List<String> ingredientes;
+
 }
