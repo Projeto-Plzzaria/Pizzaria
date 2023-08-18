@@ -15,8 +15,8 @@ import org.hibernate.envers.Audited;
 public class Bebida extends AbstractEntity {
     @Column(name = "tamanho",nullable = false)
     @Getter @Setter
-    private int tamanho;
-    @Column(name = "sabor",nullable = false,length = 10)
+    private TamanhoB tamanho;
+    @Column(name = "sabor",nullable = false,length = 20)
     @Getter @Setter
     private String sabor;
 }
