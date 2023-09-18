@@ -15,6 +15,7 @@ public class PedidoConverter {
         pedidoDTO.setComida(pedido.getComida());
         pedidoDTO.setFuncionario(pedido.getFuncionario());
         pedidoDTO.setCliente(pedido.getCliente());
+        pedidoDTO.setValor(pedido.getValor());
         return pedidoDTO;
     }
 
@@ -24,6 +25,7 @@ public class PedidoConverter {
         pedido.setComida(pedidoDTO.getComida());
         pedido.setFuncionario(pedidoDTO.getFuncionario());
         pedido.setCliente(pedidoDTO.getCliente());
+        pedidoDTO.setValor(pedido.getValor());
         return pedido;
     }
     public static List<PedidoDTO> toDTOList(List<Pedido> funcionarios) {

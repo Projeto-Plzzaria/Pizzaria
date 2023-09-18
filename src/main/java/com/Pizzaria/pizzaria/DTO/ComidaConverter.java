@@ -10,16 +10,14 @@ public class ComidaConverter {
     public static ComidaDTO toDto(Comida comida) {
         ComidaDTO dto = new ComidaDTO();
         dto.setTamanho(comida.getTamanho());
-        dto.setQidSabores(comida.getQidSabores());
-        dto.setAddIngrediente(comida.getAddIngrediente());
+        dto.setIngredientes(comida.getIngredientes());
         return dto;
     }
 
     public static Comida toEntity(ComidaDTO dto) {
         Comida comida = new Comida();
         comida.setTamanho(dto.getTamanho());
-        comida.setQidSabores(dto.getQidSabores());
-        comida.setAddIngrediente(dto.getAddIngrediente());
+        comida.setIngredientes(dto.getIngredientes());
         return comida;
     }
 

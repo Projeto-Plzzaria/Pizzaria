@@ -17,10 +17,12 @@ import java.util.List;
 
 public class Pedido extends AbstractEntity  {
 
-    @OneToMany(mappedBy = "pedido_bebidas", cascade = CascadeType.ALL)
-    private List<Bebida> bebidas;
-    @OneToMany(mappedBy = "pedido_comidas", cascade = CascadeType.ALL)
-    private List<Comida> comida;
+    @OneToOne
+    @JoinColumn(name = "bebida",nullable = false)
+    private Bebida bebida;
+   @OneToOne
+    @JoinColumn(name = "comida", nullable = false)
+    private Comida comida;
     @OneToOne
     @JoinColumn(name = "funcionario",nullable = false)
     private Funcionario funcionario;
@@ -28,4 +30,6 @@ public class Pedido extends AbstractEntity  {
     @JoinColumn(name = "cliente",nullable = false)
     private Cliente cliente;
 
+    @Column(name = "valor",nullable = false)
+    private Double valor;
 }

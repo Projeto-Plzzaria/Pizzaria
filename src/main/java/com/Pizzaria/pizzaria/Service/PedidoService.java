@@ -1,8 +1,6 @@
 package com.Pizzaria.pizzaria.Service;
 
-import com.Pizzaria.pizzaria.Entity.Bebida;
 import com.Pizzaria.pizzaria.Entity.Pedido;
-import com.Pizzaria.pizzaria.Repository.BebidasRepository;
 import com.Pizzaria.pizzaria.Repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
