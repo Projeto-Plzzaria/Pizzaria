@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -14,16 +16,17 @@ import org.hibernate.envers.Audited;
 @Table(name = "pedido",schema = "public")
 
 public class Pedido extends AbstractEntity  {
-    @OneToMany
+
+    @OneToOne
     @JoinColumn(name = "bebida",nullable = false)
     private Bebida bebida;
-    @OneToMany
+   @OneToOne
     @JoinColumn(name = "comida", nullable = false)
     private Comida comida;
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "funcionario",nullable = false)
     private Funcionario funcionario;
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "cliente",nullable = false)
     private Cliente cliente;
 
