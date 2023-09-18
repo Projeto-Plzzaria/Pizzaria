@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -16,9 +18,11 @@ import org.hibernate.envers.Audited;
 public class Pedido extends AbstractEntity  {
 
 
+
     @OneToOne
     @JoinColumn(name = "bebida",nullable = false)
     private Bebida bebida;
+  
     @OneToOne
     @JoinColumn(name = "comida", nullable = false)
     private Comida comida;
