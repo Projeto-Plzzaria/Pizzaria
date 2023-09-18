@@ -25,11 +25,12 @@ public class PedidoConverter {
         pedido.setComida(pedidoDTO.getComida());
         pedido.setFuncionario(pedidoDTO.getFuncionario());
         pedido.setCliente(pedidoDTO.getCliente());
-        pedidoDTO.setValor(pedido.getValor());
+        pedido.setValor(pedidoDTO.getValor()); // Corrigido aqui
         return pedido;
     }
-    public static List<PedidoDTO> toDTOList(List<Pedido> funcionarios) {
-        return funcionarios.stream()
+
+    public static List<PedidoDTO> toDTOList(List<Pedido> pedidos) {
+        return pedidos.stream()
                 .map(PedidoConverter::toDTO)
                 .collect(Collectors.toList());
     }

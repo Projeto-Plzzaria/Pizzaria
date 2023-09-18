@@ -17,10 +17,13 @@ import java.util.List;
 
 public class Pedido extends AbstractEntity  {
 
+
+
     @OneToOne
     @JoinColumn(name = "bebida",nullable = false)
     private Bebida bebida;
-   @OneToOne
+  
+    @OneToOne
     @JoinColumn(name = "comida", nullable = false)
     private Comida comida;
     @OneToOne

@@ -29,7 +29,6 @@ public class BebidaService {
         this.Repository.save(atualizar);
     }
 
-
     public Bebida atualizar(Long id, Bebida bebidaAtualizada) {
         Bebida bebidaExistente = Repository.findById(id).orElse(null);
         if (bebidaExistente == null) {
@@ -40,6 +39,4 @@ public class BebidaService {
             return Repository.save(bebidaExistente);
         }
     }
-
-
 }
