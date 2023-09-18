@@ -40,15 +40,13 @@ public class BebidaController {
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
         Bebida bebida = Repository.findById(id).orElse(null);
-
         if (bebida == null) {
             return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
         }
-
         BebidaDTO bebidaDTO = BebidaConverter.toDto(bebida);
-
         return ResponseEntity.ok(bebidaDTO);
     }
+
     @GetMapping("/lista/ativo/{ativo}")
     public ResponseEntity<List<BebidaDTO>> listaAtivo(@PathVariable boolean ativo) {
         List<Bebida> listaAtivo = Repository.findByAtivo(ativo);

@@ -1,8 +1,6 @@
 package com.Pizzaria.pizzaria.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.AuditTable;
@@ -17,6 +15,8 @@ import java.util.List;
 @AuditTable(value = "comidaAudited")
 @Table(name = "comida",schema = "public")
 public class Comida extends AbstractEntity  {
+
+
     @Column(name = "tamanho",nullable = false,length = 10)
     private Tamanho tamanho;
     @Column(name = "qidSabores",nullable = false,length = 50)
