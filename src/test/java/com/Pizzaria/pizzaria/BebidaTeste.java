@@ -79,7 +79,7 @@ public class BebidaTeste {
         Long id = 1L;
         Bebida bebida = new Bebida();
         bebida.setId(id);
-        bebida.setTamanho(TamanhoB._2L);
+        bebida.setTamanho(TamanhoB._1L);
         bebida.setSabor("Cola");
 
         when(bebidasRepository.findById(id))
@@ -89,7 +89,7 @@ public class BebidaTeste {
                         .get("/api/Bebida/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.tamanho").value("_2L"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.tamanho").value("_1L"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.sabor").value("Cola"));
     }
 
