@@ -22,4 +22,5 @@ public class Comida extends AbstractEntity  {
     @Column(name = "qidSabores",nullable = false,length = 50)
     private List<String> ingredientes;
 
+
 }
