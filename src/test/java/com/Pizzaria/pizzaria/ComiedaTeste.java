@@ -3,7 +3,9 @@ package com.Pizzaria.pizzaria;
 
 import com.Pizzaria.pizzaria.Controller.ComidaController;
 
+
 import com.Pizzaria.pizzaria.DTO.ComidaDTO;
+
 
 import com.Pizzaria.pizzaria.Entity.Comida;
 import com.Pizzaria.pizzaria.Entity.Tamanho;
@@ -19,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,7 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -67,7 +70,6 @@ public class ComiedaTeste {
         ComidaDTO DTO = new ComidaDTO();
         when(Service.cadastrar(any(Comida.class)))
                 .thenReturn(new Comida());
-
         mockMvc.perform(post("/api/Comida/cadastrar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(DTO)))
@@ -89,6 +91,41 @@ public class ComiedaTeste {
         assertEquals(id, comida.getId());
         assertEquals(Tamanho.Gigante, comida.getTamanho());
         assertEquals(ingredientes, comida.getIngredientes());
+    }
+
+    @Test
+    public void testListaAtivo() {
+        boolean ativo = true;
+        List<Comida> Ativas = new ArrayList<>();
+        when(Repository.findByAtivo(ativo)).thenReturn(Ativas);
+        ResponseEntity<List<ComidaDTO>> response = Controller.listaAtivo(ativo);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(Ativas.size(), response.getBody().size());
+    }
+
+    @Test
+    public void testDeleteExistente() {
+        Long id = 1L;
+
+        when(Repository.findById(id)).thenReturn(Optional.of(new Comida()));
+        ResponseEntity<String> response = Controller.delete(id);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Apagado com sucesso", response.getBody());
+
+        verify(Repository, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void testAtualizarComSucesso() {
+        Long id = 1L;
+
+        when(Service.atualizar(eq(id), any())).thenReturn(new Comida());
+
+        ComidaDTO aDTO = new ComidaDTO();
+        ResponseEntity<?> response = Controller.atualizar(id, aDTO);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Atualizado com sucesso!", response.getBody());
     }
 
 

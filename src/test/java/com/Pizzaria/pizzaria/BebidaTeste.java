@@ -84,10 +84,8 @@ public class BebidaTeste {
         bebida.setId(id);
         bebida.setTamanho(TamanhoB._1L);
         bebida.setSabor("Cola");
-
         when(bebidasRepository.findById(id))
                 .thenReturn(Optional.of(bebida));
-
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/Bebida/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
