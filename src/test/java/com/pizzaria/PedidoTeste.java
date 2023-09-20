@@ -111,11 +111,15 @@ public class PedidoTeste {
                         .get("/api/Pedido/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.Bebida").value("cargos"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.Comida").value("funcionario@hotmail.com"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.Funcionario").value("funcionario@hotmail.com"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.Clente").value("funcionario@hotmail.com"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.Valor").value("funcionario@hotmail.com"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.bebida.tamanho").value("L_1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.bebida.sabor").value("Cola"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.comida.tamanho").value("GIGANTE"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.funcionario.cargo").value("cargos"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.funcionario.email").value("funcionario@hotmail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cliente.nome").value("Mauricio"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cliente.numero").value("45998874502"));
+
+
 
 
     }
