@@ -1,11 +1,17 @@
 package com.pizzaria;
 
+import ch.qos.logback.core.net.server.Client;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pizzaria.controller.ClienteController;
 import com.pizzaria.controller.FuncionarioController;
+import com.pizzaria.dto.ClienteDTO;
 import com.pizzaria.dto.FuncionarioDTO;
 import com.pizzaria.entity.Cargo;
+import com.pizzaria.entity.Cliente;
 import com.pizzaria.entity.Funcionario;
+import com.pizzaria.repository.ClienteRepository;
 import com.pizzaria.repository.FuncionarioRepository;
+import com.pizzaria.service.ClienteService;
 import com.pizzaria.service.FuncionarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,68 +38,62 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @WebAppConfiguration
-public class FuncionarioTeste {
+public class ClienteTeste {
+
 
     private MockMvc mockMvc;
     @InjectMocks
-    private FuncionarioController funcionarioController;
+    private ClienteController clienteController;
 
     @Mock
-    private FuncionarioService funcionarioService;
+    private ClienteService clienteService;
     @Mock
-    private FuncionarioRepository funcionarioRepository;
+    private ClienteRepository clienteRepository;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(funcionarioController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(clienteController).build();
     }
 
-
     @Test
-    public void testFuncionario() throws Exception {
-        when(funcionarioService.listartudo()).thenReturn(Collections.emptyList());
+    public void testCliente() throws Exception {
+        when(clienteService.listartudo()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/Funcionario/lista")
+        mockMvc.perform(get("/api/Cliente/lista")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-
     @Test
     public void testCadastrarSuccess() throws Exception {
-        FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
+        ClienteDTO clienteDTO = new ClienteDTO();
 
 
-        when(funcionarioService.cadastrar(any(Funcionario.class)))
-                .thenReturn(new Funcionario());
+        when(clienteService.cadastrar(any(Cliente.class)))
+                .thenReturn(new Cliente());
 
-        mockMvc.perform(post("/api/Funcionario/cadastrar")
+        mockMvc.perform(post("/api/Cliente/cadastrar")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(funcionarioDTO)))
+                        .content(asJsonString(Cliente)))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
+
     @Test
     public void testListaIdSucesso() throws Exception {
         Long id = 1L;
-        Funcionario funcionario = new Funcionario();
-        funcionario.setId(id);
-        funcionario.setCargo(Cargo.cargos);
-        funcionario.setEmail("funcionario@hotmail.com");
-        funcionario.setNome("Paulin");
+        Cliente cliente = new Cliente();
+        cliente.setId(id);
 
-        when(funcionarioRepository.findById(id))
-                .thenReturn(Optional.of(funcionario));
+        when(clienteRepository.findById(id))
+                .thenReturn(Optional.of(cliente));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/Funcionario/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cargo").value("cargos"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Paulin"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("funcionario@hotmail.com"));
     }
 
     private String asJsonString(Object obj) {

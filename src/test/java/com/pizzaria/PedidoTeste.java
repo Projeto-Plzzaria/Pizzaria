@@ -50,7 +50,7 @@ public class PedidoTeste {
     }
 
     @Test
-    public void testFuncionario() throws Exception {
+    public void testPedido() throws Exception {
         when(pedidoService.listartudo()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/api/Pedido/lista")
