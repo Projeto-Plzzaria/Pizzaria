@@ -1,12 +1,12 @@
 package com.pizzaria;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pizzaria.controller.FuncionarioController;
 import com.pizzaria.dto.FuncionarioDTO;
-import com.pizzaria.entity.Cargo;
-import com.pizzaria.entity.Funcionario;
-import com.pizzaria.repository.FuncionarioRepository;
-import com.pizzaria.service.FuncionarioService;
+import com.pizzaria.dto.PedidoDTO;
+import com.pizzaria.entity.*;
+import com.pizzaria.repository.PedidoRepository;
+import com.pizzaria.controller.PedidoController;
+import com.pizzaria.service.PedidoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,66 +32,92 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @WebAppConfiguration
-public class FuncionarioTeste {
-
+public class PedidoTeste {
     private MockMvc mockMvc;
     @InjectMocks
-    private FuncionarioController funcionarioController;
+    private PedidoController pedidoController;
 
     @Mock
-    private FuncionarioService funcionarioService;
+    private PedidoService pedidoService;
     @Mock
-    private FuncionarioRepository funcionarioRepository;
+    private PedidoRepository pedidoRepository;
+
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(funcionarioController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(pedidoController).build();
     }
-
 
     @Test
     public void testFuncionario() throws Exception {
-        when(funcionarioService.listartudo()).thenReturn(Collections.emptyList());
+        when(pedidoService.listartudo()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/Funcionario/lista")
+        mockMvc.perform(get("/api/Pedido/lista")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-
     @Test
     public void testCadastrarSuccess() throws Exception {
-        FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
+        PedidoDTO pedidoDTO = new PedidoDTO();
 
 
-        when(funcionarioService.cadastrar(any(Funcionario.class)))
-                .thenReturn(new Funcionario());
+        when(pedidoService.cadastrar(any(Pedido.class)))
+                .thenReturn(new Pedido());
 
-        mockMvc.perform(post("/api/Funcionario/cadastrar")
+        mockMvc.perform(post("/api/Pedido/cadastrar")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(funcionarioDTO)))
+                        .content(asJsonString(pedidoDTO)))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
     @Test
     public void testListaIdSucesso() throws Exception {
         Long id = 1L;
+        Bebida bebida = new Bebida();
+        bebida.setId(id);
+        bebida.setTamanho(TamanhoB.L_1);
+        bebida.setSabor("Cola");
+
+        Comida comida = new Comida();
+        comida.setId(id);
+        comida.setTamanho(Tamanho.GIGANTE);
+
         Funcionario funcionario = new Funcionario();
         funcionario.setId(id);
         funcionario.setCargo(Cargo.cargos);
         funcionario.setEmail("funcionario@hotmail.com");
 
-        when(funcionarioRepository.findById(id))
-                .thenReturn(Optional.of(funcionario));
+        Cliente cliente = new Cliente();
+        cliente.setId(id);
+        cliente.setNome("Mauricio");
+        cliente.setNumero("45998874502");
+
+
+        Pedido pedido = new Pedido();
+        pedido.setId(id);
+        pedido.setBebida(bebida);
+        pedido.setComida(comida);
+        pedido.setFuncionario(funcionario);
+        pedido.setCliente(cliente);
+        pedido.setValor(68.0);
+
+        when(pedidoRepository.findById(id))
+                .thenReturn(Optional.of(pedido));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/Funcionario/lista/id/" + id)
+                        .get("/api/Pedido/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cargo").value("cargos"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("funcionario@hotmail.com"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Bebida").value("cargos"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Comida").value("funcionario@hotmail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Funcionario").value("funcionario@hotmail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Clente").value("funcionario@hotmail.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.Valor").value("funcionario@hotmail.com"));
+
+
     }
 
     private String asJsonString(Object obj) {
@@ -101,10 +127,6 @@ public class FuncionarioTeste {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
 
 
 

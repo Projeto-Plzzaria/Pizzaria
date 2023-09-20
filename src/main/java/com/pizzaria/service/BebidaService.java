@@ -12,31 +12,32 @@ import java.util.List;
 
 public class BebidaService {
     @Autowired
-    private BebidasRepository Repository;
+    private BebidasRepository bebidasRepository;
+
     public List<Bebida> listartudo(){
-        return Repository.findAll();
+        return bebidasRepository.findAll();
     }
     @Transactional(rollbackFor = Exception.class)
     public Bebida cadastrar(Bebida cadastrar) {
-        return this.Repository.save(cadastrar);
+        return this.bebidasRepository.save(cadastrar);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void atualizarum(Long id, Bebida atualizar) {
-        final Bebida marcaBanco = this.Repository.findById(atualizar.getId()).orElse(null);
+        final Bebida marcaBanco = this.bebidasRepository.findById(atualizar.getId()).orElse(null);
         Assert.isTrue(marcaBanco.getId().equals(id) ,"Error id da URL diferente do body");
         Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
-        this.Repository.save(atualizar);
+        this.bebidasRepository.save(atualizar);
     }
 
     public Bebida atualizar(Long id, Bebida bebidaAtualizada) {
-        Bebida bebidaExistente = Repository.findById(id).orElse(null);
+        Bebida bebidaExistente = bebidasRepository.findById(id).orElse(null);
         if (bebidaExistente == null) {
             return null;
         } else {
             bebidaExistente.setSabor(bebidaAtualizada.getSabor());
             bebidaExistente.setTamanho(bebidaAtualizada.getTamanho());
-            return Repository.save(bebidaExistente);
+            return bebidasRepository.save(bebidaExistente);
         }
     }
 }

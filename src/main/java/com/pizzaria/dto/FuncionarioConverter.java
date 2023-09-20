@@ -12,7 +12,8 @@ public class FuncionarioConverter {
     public static FuncionarioDTO toDTO(Funcionario funcionario) {
         return new FuncionarioDTO(
                 funcionario.getNome(),
-                funcionario.getCargo()
+                funcionario.getCargo(),
+                funcionario.getEmail()
 
         );
     }

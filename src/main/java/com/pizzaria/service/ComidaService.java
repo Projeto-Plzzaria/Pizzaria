@@ -12,23 +12,23 @@ import java.util.List;
 public class ComidaService {
 
     @Autowired
-    private ComidaRepository Repository;
+    private ComidaRepository comidaRepository;
     public List<Comida> listartudo(){
-        return Repository.findAll();
+        return comidaRepository.findAll();
     }
     @Transactional(rollbackFor = Exception.class)
     public Comida cadastrar(Comida cadastrar) {
-        return this.Repository.save(cadastrar);
+        return this.comidaRepository.save(cadastrar);
     }
 
     public Comida atualizar(Long id, Comida comidaAtualizada) {
-        Comida comidaExistente = Repository.findById(id).orElse(null);
+        Comida comidaExistente = comidaRepository.findById(id).orElse(null);
         if (comidaExistente == null) {
             return null;
         } else {
             comidaExistente.setTamanho(comidaAtualizada.getTamanho());
             comidaExistente.setIngredientes(comidaAtualizada.getIngredientes());
-            return Repository.save(comidaExistente);
+            return comidaRepository.save(comidaExistente);
         }
     }
 }

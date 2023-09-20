@@ -11,17 +11,17 @@ import java.util.List;
 
 public class EnderecoService {
     @Autowired
-    private EnderecoRepository Repository;
+    private EnderecoRepository enderecoRepository;
     public List<Endereco> listartudo(){
-        return Repository.findAll();
+        return enderecoRepository.findAll();
     }
     @Transactional(rollbackFor = Exception.class)
     public Endereco cadastrar(Endereco cadastrar) {
-        return this.Repository.save(cadastrar);
+        return this.enderecoRepository.save(cadastrar);
     }
 
     public Endereco atualizar(Long id, Endereco enderecoAtualizado) {
-        Endereco enderecoExistente = Repository.findById(id).orElse(null);
+        Endereco enderecoExistente = enderecoRepository.findById(id).orElse(null);
         if (enderecoExistente == null) {
             return null;
         } else {
@@ -29,7 +29,7 @@ public class EnderecoService {
             enderecoExistente.setRua(enderecoAtualizado.getRua());
             enderecoExistente.setNumero(enderecoAtualizado.getNumero());
             enderecoExistente.setBairro(enderecoAtualizado.getBairro());
-            return Repository.save(enderecoExistente);
+            return enderecoRepository.save(enderecoExistente);
         }
     }
 }

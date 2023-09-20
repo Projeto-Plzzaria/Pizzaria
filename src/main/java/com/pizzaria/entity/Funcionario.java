@@ -1,5 +1,6 @@
 package com.pizzaria.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,6 @@ public class Funcionario extends Pessoa {
     @Column(name = "cargo",nullable = false,length = 20)
     private Cargo cargo;
     @Column(name = "email",nullable = false,length = 20)
-    private String Email;
+    private String email;
 
 }

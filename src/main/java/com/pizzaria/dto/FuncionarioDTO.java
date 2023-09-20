@@ -8,13 +8,15 @@ import lombok.Setter;
 public class FuncionarioDTO {
     private String nome;
     private Cargo cargo;
+    private String email;
 
 
     public FuncionarioDTO() {
     }
 
-    public FuncionarioDTO(String nome, Cargo cargo) {
+    public FuncionarioDTO(String nome, Cargo cargo, String email) {
         this.nome = nome;
         this.cargo = cargo;
+        this.email = email;
     }
 }

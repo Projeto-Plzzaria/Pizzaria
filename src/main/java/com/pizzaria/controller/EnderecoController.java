@@ -18,25 +18,25 @@ import java.util.Optional;
 @RequestMapping(value = "/api/Endereco")
 public class EnderecoController {
     @Autowired
-    private EnderecoRepository Repository;
+    private EnderecoRepository enderecoRepository;
     @Autowired
-    private EnderecoService Service;
+    private EnderecoService enderecoService;
 
     @GetMapping("/listar")
     public ResponseEntity<List<Endereco>> listar(){
-        List<Endereco> listartudo = Service.listartudo();
+        List<Endereco> listartudo = enderecoService.listartudo();
         return ResponseEntity.ok(listartudo);
     }
     @GetMapping("/lista")
     public ResponseEntity<List<EnderecoDTO>> lista() {
-        List<Endereco> listaEnderecos = Service.listartudo();
+        List<Endereco> listaEnderecos = enderecoService.listartudo();
         List<EnderecoDTO> listaEnderecosDTO = EnderecoConverter.toDtoList(listaEnderecos);
         return ResponseEntity.ok(listaEnderecosDTO);
     }
 
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
-        Endereco endereco = Repository.findById(id).orElse(null);
+        Endereco endereco = enderecoRepository.findById(id).orElse(null);
 
         if (endereco == null) {
             return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
@@ -48,7 +48,7 @@ public class EnderecoController {
     }
     @GetMapping("/lista/ativo/{ativo}")
     public ResponseEntity<List<EnderecoDTO>> listaAtivo(@PathVariable boolean ativo) {
-        List<Endereco> listaAtivo = Repository.findByAtivo(ativo);
+        List<Endereco> listaAtivo = enderecoRepository.findByAtivo(ativo);
         List<EnderecoDTO> listaAtivoDTO = EnderecoConverter.toDtoList(listaAtivo);
 
         return ResponseEntity.ok(listaAtivoDTO);
@@ -57,7 +57,7 @@ public class EnderecoController {
     public ResponseEntity<?> cadastrar(@RequestBody EnderecoDTO cadastroDTO) {
         try {
             Endereco endereco = EnderecoConverter.toEntity(cadastroDTO);
-            this.Service.cadastrar(endereco);
+            this.enderecoService.cadastrar(endereco);
             return ResponseEntity.ok("Cadastro feito com sucesso");
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
@@ -69,9 +69,9 @@ public class EnderecoController {
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Endereco> deletarId = Repository.findById(id);
+        Optional<Endereco> deletarId = enderecoRepository.findById(id);
         if (deletarId.isPresent()) {
-            Repository.deleteById(id);
+            enderecoRepository.deleteById(id);
             return ResponseEntity.ok("Apagado com sucesso");
         } else {
             return ResponseEntity.notFound().build();
@@ -81,7 +81,7 @@ public class EnderecoController {
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody EnderecoDTO dto) {
         try {
             Endereco enderecoAtualizado = EnderecoConverter.toEntity(dto);
-            this.Service.atualizar(id, enderecoAtualizado);
+            this.enderecoService.atualizar(id, enderecoAtualizado);
             return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

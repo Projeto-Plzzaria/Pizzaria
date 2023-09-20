@@ -13,20 +13,20 @@ import java.util.List;
 public class PedidoService {
 
     @Autowired
-    private PedidoRepository Repository;
+    private PedidoRepository pedidoRepository;
     public List<Pedido> listartudo(){
-        return Repository.findAll();
+        return pedidoRepository.findAll();
     }
     @Transactional(rollbackFor = Exception.class)
     public Pedido cadastrar(Pedido cadastrar) {
-        return this.Repository.save(cadastrar);
+        return this.pedidoRepository.save(cadastrar);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public void atualizar(Long id, Pedido atualizar) {
-        final Pedido marcaBanco = this.Repository.findById(atualizar.getId()).orElse(null);
+        final Pedido marcaBanco = this.pedidoRepository.findById(atualizar.getId()).orElse(null);
         Assert.isTrue(marcaBanco.getId().equals(id) ,"Error id da URL diferente do body");
         Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
-        this.Repository.save(atualizar);
+        this.pedidoRepository.save(atualizar);
     }
 }

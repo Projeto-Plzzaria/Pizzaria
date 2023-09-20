@@ -18,28 +18,28 @@ import java.util.Optional;
 @RequestMapping(value = "/api/Bebida")
 public class BebidaController {
     @Autowired
-    private BebidasRepository Repository;
+    private BebidasRepository bebidasRepository;
     @Autowired
-    private BebidaService Service;
+    private BebidaService bebidaService;
 
 
 
     @GetMapping("/lista")
     public ResponseEntity<List<BebidaDTO>> lista() {
-        List<Bebida> listaBebidas = Service.listartudo();
+        List<Bebida> listaBebidas = bebidaService.listartudo();
         List<BebidaDTO> listaBebidasDTO = BebidaConverter.toDtoList(listaBebidas);
         return ResponseEntity.ok(listaBebidasDTO);
     }
 
     @GetMapping("/listar")
     public ResponseEntity<List<Bebida>> listas(){
-        List<Bebida> listartudo = Service.listartudo();
+        List<Bebida> listartudo = bebidaService.listartudo();
         return ResponseEntity.ok(listartudo);
     }
 
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
-        Bebida bebida = Repository.findById(id).orElse(null);
+        Bebida bebida = bebidasRepository.findById(id).orElse(null);
         if (bebida == null) {
             return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
         }
@@ -49,7 +49,7 @@ public class BebidaController {
 
     @GetMapping("/lista/ativo/{ativo}")
     public ResponseEntity<List<BebidaDTO>> listaAtivo(@PathVariable boolean ativo) {
-        List<Bebida> listaAtivo = Repository.findByAtivo(ativo);
+        List<Bebida> listaAtivo = bebidasRepository.findByAtivo(ativo);
         List<BebidaDTO> listaAtivoDTO = BebidaConverter.toDtoList(listaAtivo);
 
         return ResponseEntity.ok(listaAtivoDTO);
@@ -59,7 +59,7 @@ public class BebidaController {
     public ResponseEntity<?> cadastrar(@RequestBody BebidaDTO cadastroDTO) {
         try {
             Bebida bebida = BebidaConverter.toEntity(cadastroDTO);
-            this.Service.cadastrar(bebida);
+            this.bebidaService.cadastrar(bebida);
             return ResponseEntity.ok("Cadastro feito com sucesso");
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
@@ -72,9 +72,9 @@ public class BebidaController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Bebida> deletarId = Repository.findById(id);
+        Optional<Bebida> deletarId = bebidasRepository.findById(id);
         if (deletarId.isPresent()) {
-            Repository.deleteById(id);
+            bebidasRepository.deleteById(id);
             return ResponseEntity.ok("Apagado com sucesso");
         } else {
             return ResponseEntity.notFound().build();
@@ -84,7 +84,7 @@ public class BebidaController {
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody BebidaDTO dto) {
         try {
             Bebida bebidaAtualizada = BebidaConverter.toEntity(dto);
-            this.Service.atualizar(id, bebidaAtualizada);
+            this.bebidaService.atualizar(id, bebidaAtualizada);
             return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

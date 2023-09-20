@@ -21,24 +21,24 @@ import java.util.Optional;
 @RequestMapping(value = "/api/Funcionario")
 public class FuncionarioController {
     @Autowired
-private FuncionarioRepository Repository;
+private FuncionarioRepository funcionarioRepository;
     @Autowired
-    private FuncionarioService Service;
+    private FuncionarioService funcionarioService;
 
     @GetMapping("/listar")
     public ResponseEntity<List<Funcionario>> listar(){
-        List<Funcionario> listartudo = Service.listartudo();
+        List<Funcionario> listartudo = funcionarioService.listartudo();
         return ResponseEntity.ok(listartudo);
     }
     @GetMapping("/lista")
     public ResponseEntity<List<FuncionarioDTO>> lista() {
-        List<Funcionario> listas = Service.listartudo();
+        List<Funcionario> listas = funcionarioService.listartudo();
         List<FuncionarioDTO> listasDTO = FuncionarioConverter.toDTOList(listas);
         return ResponseEntity.ok(listasDTO);
     }
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
-        Funcionario listaid = Repository.findById(id).orElse(null);
+        Funcionario listaid = funcionarioRepository.findById(id).orElse(null);
 
         if (listaid == null) {
             return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
@@ -49,7 +49,7 @@ private FuncionarioRepository Repository;
     }
     @GetMapping("/lista/ativo/{ativo}")
     public ResponseEntity<List<FuncionarioDTO>> listaAtivo(@PathVariable boolean ativo) {
-        List<Funcionario> listaAtivo = Repository.findByAtivo(ativo);
+        List<Funcionario> listaAtivo = funcionarioRepository.findByAtivo(ativo);
         List<FuncionarioDTO> listaAtivoDTO = FuncionarioConverter.toDTOList(listaAtivo);
         return ResponseEntity.ok(listaAtivoDTO);
     }
@@ -57,7 +57,7 @@ private FuncionarioRepository Repository;
     public ResponseEntity<?> cadastrar(@RequestBody FuncionarioDTO cadastroDTO) {
         try {
             Funcionario cadastro = FuncionarioConverter.toEntity(cadastroDTO);
-            this.Service.cadastrar(cadastro);
+            this.funcionarioService.cadastrar(cadastro);
             return ResponseEntity.ok("Cadastro feito com sucesso");
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
@@ -70,9 +70,9 @@ private FuncionarioRepository Repository;
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Funcionario> deletarId = Repository.findById(id);
+        Optional<Funcionario> deletarId = funcionarioRepository.findById(id);
         if (deletarId.isPresent()) {
-            Repository.deleteById(id);
+            funcionarioRepository.deleteById(id);
             return ResponseEntity.ok("Apagado com sucesso");
         } else {
             return ResponseEntity.notFound().build();
@@ -82,7 +82,7 @@ private FuncionarioRepository Repository;
     public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody FuncionarioDTO dto) {
         try {
             Funcionario Atualizado = FuncionarioConverter.toEntity(dto);
-            this.Service.atualizar(id, Atualizado);
+            this.funcionarioService.atualizar(id, Atualizado);
             return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -1,5 +1,5 @@
 package com.pizzaria.entity;
 
 public enum Tamanho {
-    PEQUENA, MEDIA, GRANDE, Gigante;
+    PEQUENA, MEDIA, GRANDE, GIGANTE;
 }

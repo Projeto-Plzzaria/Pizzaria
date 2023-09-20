@@ -4,7 +4,6 @@ import com.pizzaria.entity.Bebida;
 import com.pizzaria.entity.Cliente;
 import com.pizzaria.entity.Comida;
 import com.pizzaria.entity.Funcionario;
-import com.pizzaria.pizzaria.Entity.*;
 import lombok.Getter;
 import lombok.Setter;
 

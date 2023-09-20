@@ -77,7 +77,7 @@ public class ComiedaTeste {
         Long id = 1L;
         Comida comida = new Comida();
         comida.setId(id);
-        comida.setTamanho(Tamanho.Gigante);
+        comida.setTamanho(Tamanho.GIGANTE);
 
         List<String> ingredientes = new ArrayList<>();
         ingredientes.add("Calabresa");
@@ -85,7 +85,7 @@ public class ComiedaTeste {
         comida.setIngredientes(ingredientes);
 
         assertEquals(id, comida.getId());
-        assertEquals(Tamanho.Gigante, comida.getTamanho());
+        assertEquals(Tamanho.GIGANTE, comida.getTamanho());
         assertEquals(ingredientes, comida.getIngredientes());
     }
 
