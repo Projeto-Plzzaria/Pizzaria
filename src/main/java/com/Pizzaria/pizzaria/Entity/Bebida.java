@@ -18,4 +18,12 @@ public class Bebida extends AbstractEntity {
     @Column(name = "sabor",nullable = false,length = 20)
     @Getter @Setter
     private String sabor;
+
+    public Bebida(long l, String bebida1, boolean b) {
+        super();
+    }
+
+    public Bebida() {
+
+    }
 }

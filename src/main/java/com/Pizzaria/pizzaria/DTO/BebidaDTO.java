@@ -18,4 +18,7 @@ public class BebidaDTO {
         this.tamanho = tamanho;
         this.sabor = sabor;
     }
+
+    public BebidaDTO(long l, String bebida1, boolean b) {
+    }
 }
