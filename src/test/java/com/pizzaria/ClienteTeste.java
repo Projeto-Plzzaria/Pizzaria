@@ -9,6 +9,7 @@ import com.pizzaria.dto.FuncionarioDTO;
 import com.pizzaria.entity.Cargo;
 import com.pizzaria.entity.Cliente;
 import com.pizzaria.entity.Funcionario;
+import com.pizzaria.entity.Pessoa;
 import com.pizzaria.repository.ClienteRepository;
 import com.pizzaria.repository.FuncionarioRepository;
 import com.pizzaria.service.ClienteService;
@@ -76,7 +77,7 @@ public class ClienteTeste {
 
         mockMvc.perform(post("/api/Cliente/cadastrar")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(asJsonString(Cliente)))
+                        .content(asJsonString(clienteDTO)))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
@@ -93,7 +94,7 @@ public class ClienteTeste {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/api/Funcionario/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     private String asJsonString(Object obj) {
