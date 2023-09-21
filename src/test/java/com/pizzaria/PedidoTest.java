@@ -1,7 +1,6 @@
 package com.pizzaria;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pizzaria.dto.FuncionarioDTO;
 import com.pizzaria.dto.PedidoDTO;
 import com.pizzaria.entity.*;
 import com.pizzaria.repository.PedidoRepository;
@@ -32,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @WebAppConfiguration
-public class PedidoTeste {
+class PedidoTest {
     private MockMvc mockMvc;
     @InjectMocks
     private PedidoController pedidoController;
@@ -44,13 +43,13 @@ public class PedidoTeste {
 
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(pedidoController).build();
     }
 
     @Test
-    public void testPedido() throws Exception {
+    void testPedido() throws Exception {
         when(pedidoService.listartudo()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/api/Pedido/lista")
@@ -60,7 +59,7 @@ public class PedidoTeste {
     }
 
     @Test
-    public void testCadastrarSuccess() throws Exception {
+    void testCadastrarSuccess() throws Exception {
         PedidoDTO pedidoDTO = new PedidoDTO();
 
 
@@ -74,7 +73,7 @@ public class PedidoTeste {
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
     @Test
-    public void testListaIdSucesso() throws Exception {
+    void testListaIdSucesso() throws Exception {
         Long id = 1L;
         Bebida bebida = new Bebida();
         bebida.setId(id);
@@ -87,7 +86,7 @@ public class PedidoTeste {
 
         Funcionario funcionario = new Funcionario();
         funcionario.setId(id);
-        funcionario.setCargo(Cargo.cargos);
+        funcionario.setCargo(Cargo.CARGOS);
         funcionario.setEmail("funcionario@hotmail.com");
 
         Cliente cliente = new Cliente();
@@ -114,7 +113,7 @@ public class PedidoTeste {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bebida.tamanho").value("L_1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bebida.sabor").value("Cola"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.comida.tamanho").value("GIGANTE"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.funcionario.cargo").value("cargos"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.funcionario.cargo").value("CARGOS"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.funcionario.email").value("funcionario@hotmail.com"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cliente.nome").value("Mauricio"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cliente.numero").value("45998874502"));

@@ -1,107 +1,111 @@
 package com.pizzaria;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pizzaria.controller.ComidaController;
-import com.pizzaria.dto.ComidaDTO;
-import com.pizzaria.entity.Comida;
-import com.pizzaria.entity.Tamanho;
-import com.pizzaria.repository.ComidaRepository;
-import com.pizzaria.service.ComidaService;
+import com.pizzaria.controller.EnderecoController;
+import com.pizzaria.dto.EnderecoDTO;
+import com.pizzaria.entity.Endereco;
+import com.pizzaria.repository.EnderecoRepository;
+import com.pizzaria.service.EnderecoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ComidaTeste {
+@SpringBootTest
+class EnderecoTest {
+
 
 
     private MockMvc mockMvc;
     @InjectMocks
-    private ComidaController Controller;
+    private EnderecoController Controller;
 
     @Mock
-    private ComidaService Service;
+    private EnderecoService Service;
     @Mock
-    private ComidaRepository Repository;
+    private EnderecoRepository Repository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(Controller).build();
     }
 
     @Test
-    public void testLista() throws Exception {
+    void testLista() throws Exception {
         when(Service.listartudo()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/Comida/lista")
+        mockMvc.perform(get("/api/Endereco/lista")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
     @Test
-    public void testCadastrarSuccess() throws Exception {
-        ComidaDTO DTO = new ComidaDTO();
-        when(Service.cadastrar(any(Comida.class)))
-                .thenReturn(new Comida());
-        mockMvc.perform(post("/api/Comida/cadastrar")
+    void testCadastrarSuccess() throws Exception {
+        EnderecoDTO DTO = new EnderecoDTO();
+        when(Service.cadastrar(any(Endereco.class)))
+                .thenReturn(new Endereco());
+        mockMvc.perform(post("/api/Endereco/cadastrar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(DTO)))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
     @Test
-    public void testComida() {
+    void testEndereco() {
         Long id = 1L;
-        Comida comida = new Comida();
-        comida.setId(id);
-        comida.setTamanho(Tamanho.GIGANTE);
+        String rua = "Rua Teste";
+        int numero = 123;
+        String bairro = "Bairro Teste";
 
-        List<String> ingredientes = new ArrayList<>();
-        ingredientes.add("Calabresa");
-        ingredientes.add("Queijo");
-        comida.setIngredientes(ingredientes);
+        Endereco endereco = new Endereco();
+        endereco.setId(id);
+        endereco.setRua(rua);
+        endereco.setNumero(numero);
+        endereco.setBairro(bairro);
 
-        assertEquals(id, comida.getId());
-        assertEquals(Tamanho.GIGANTE, comida.getTamanho());
-        assertEquals(ingredientes, comida.getIngredientes());
+        assertEquals(id, endereco.getId());
+        assertEquals(rua, endereco.getRua());
+        assertEquals(numero, endereco.getNumero());
+        assertEquals(bairro, endereco.getBairro());
     }
 
     @Test
-    public void testListaAtivo() {
+    void testListaAtivo() {
         boolean ativo = true;
-        List<Comida> Ativas = new ArrayList<>();
+        List<Endereco> Ativas = new ArrayList<>();
         when(Repository.findByAtivo(ativo)).thenReturn(Ativas);
-        ResponseEntity<List<ComidaDTO>> response = Controller.listaAtivo(ativo);
+        ResponseEntity<List<EnderecoDTO>> response = Controller.listaAtivo(ativo);
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(Ativas.size(), response.getBody().size());
     }
 
     @Test
-    public void testDeleteExistente() {
+    void testDeleteExistente() {
         Long id = 1L;
 
-        when(Repository.findById(id)).thenReturn(Optional.of(new Comida()));
+        when(Repository.findById(id)).thenReturn(Optional.of(new Endereco()));
         ResponseEntity<String> response = Controller.delete(id);
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Apagado com sucesso", response.getBody());
@@ -110,12 +114,12 @@ public class ComidaTeste {
     }
 
     @Test
-    public void testAtualizarComSucesso() {
+    void testAtualizarComSucesso() {
         Long id = 1L;
 
-        when(Service.atualizar(eq(id), any())).thenReturn(new Comida());
+        when(Service.atualizar(eq(id), any())).thenReturn(new Endereco());
 
-        ComidaDTO aDTO = new ComidaDTO();
+        EnderecoDTO aDTO = new EnderecoDTO();
         ResponseEntity<?> response = Controller.atualizar(id, aDTO);
 
         assertEquals(200, response.getStatusCodeValue());

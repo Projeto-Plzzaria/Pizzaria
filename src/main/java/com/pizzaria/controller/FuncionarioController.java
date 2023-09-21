@@ -3,11 +3,8 @@ package com.pizzaria.controller;
 import com.pizzaria.service.FuncionarioService;
 import com.pizzaria.dto.FuncionarioConverter;
 import com.pizzaria.dto.FuncionarioDTO;
-
 import com.pizzaria.entity.Funcionario;
-
 import com.pizzaria.repository.FuncionarioRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -55,9 +52,7 @@ private FuncionarioRepository funcionarioRepository;
             Funcionario cadastro = FuncionarioConverter.toEntity(cadastroDTO);
             this.funcionarioService.cadastrar(cadastro);
             return ResponseEntity.ok("Cadastro feito com sucesso");
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
+        } catch (DataIntegrityViolationException | IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -77,8 +72,8 @@ private FuncionarioRepository funcionarioRepository;
     @PutMapping("/put/id/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody FuncionarioDTO dto) {
         try {
-            Funcionario Atualizado = FuncionarioConverter.toEntity(dto);
-            this.funcionarioService.atualizar(id, Atualizado);
+            Funcionario atualizado = FuncionarioConverter.toEntity(dto);
+            this.funcionarioService.atualizar(id, atualizado);
             return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

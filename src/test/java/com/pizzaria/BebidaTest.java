@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 
-public class BebidaTeste {
+class BebidaTest {
 
     private MockMvc mockMvc;
     @InjectMocks
@@ -55,7 +55,7 @@ public class BebidaTeste {
     }
 
     @Test
-    public void testLista() throws Exception {
+    void testLista() throws Exception {
         // Configure o comportamento do serviço mock
         when(bebidaService.listartudo()).thenReturn(Collections.emptyList());
 
@@ -68,7 +68,7 @@ public class BebidaTeste {
         // Adicione mais verificações conforme necessário para garantir que o método lista() esteja funcionando corretamente
     }
     @Test
-    public void testGetterAndSetter() {
+    void testGetterAndSetter() {
         Bebida bebida = new Bebida();
 
         // Teste do setter
@@ -90,7 +90,7 @@ public class BebidaTeste {
 
 
     @Test
-    public void testCadastrarSuccess() throws Exception {
+    void testCadastrarSuccess() throws Exception {
         BebidaDTO bebidaDTO = new BebidaDTO();
         when(bebidaService.cadastrar(any(Bebida.class)))
                 .thenReturn(new Bebida());
@@ -102,7 +102,7 @@ public class BebidaTeste {
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
     @Test
-    public void testListaIdSucesso() throws Exception {
+    void testListaIdSucesso() throws Exception {
         Long id = 1L;
         Bebida bebida = new Bebida();
         bebida.setId(id);
@@ -119,7 +119,7 @@ public class BebidaTeste {
     }
 
     @Test
-    public void testListaAtivo() {
+    void testListaAtivo() {
         boolean ativo = true;
         List<Bebida> bebidasAtivas = new ArrayList<>();
         when(bebidasRepository.findByAtivo(ativo)).thenReturn(bebidasAtivas);
@@ -129,7 +129,7 @@ public class BebidaTeste {
     }
 
     @Test
-    public void testDeleteExistente() {
+    void testDeleteExistente() {
         Long id = 1L;
 
         when(bebidasRepository.findById(id)).thenReturn(Optional.of(new Bebida()));
@@ -143,7 +143,7 @@ public class BebidaTeste {
     }
 
     @Test
-    public void testAtualizarComSucesso() {
+    void testAtualizarComSucesso() {
 
         Long id = 1L;
 

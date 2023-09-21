@@ -58,9 +58,7 @@ public class PedidoController {
             Pedido cadastro = PedidoConverter.toEntity(cadastroDTO);
             this.pedidoService.cadastrar(cadastro);
             return ResponseEntity.ok("Cadastro feito com sucesso");
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
+        } catch (DataIntegrityViolationException | IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -80,8 +78,8 @@ public class PedidoController {
     @PutMapping("/put/id/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody PedidoDTO dto) {
         try {
-            Pedido Atualizado = PedidoConverter.toEntity(dto);
-            this.pedidoService.atualizar(id, Atualizado);
+            Pedido atualizado = PedidoConverter.toEntity(dto);
+            this.pedidoService.atualizar(id, atualizado);
             return ResponseEntity.ok().body("Atualizado com sucesso!");
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

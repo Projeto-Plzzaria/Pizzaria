@@ -5,14 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CargoTeste {
+class CargoTest {
 
     @Test
-    public void testCargo() {
-        assertEquals("cargos", Cargo.cargos.name());
+    void testCargo() {
+        assertEquals("CARGOS", Cargo.CARGOS.name());
     }
 
     @Test
-    public void testToStringCargo() {assertEquals("cargos", Cargo.cargos.toString());}
+    void testToStringCargo() {assertEquals("CARGOS", Cargo.CARGOS.toString());}
 
 }

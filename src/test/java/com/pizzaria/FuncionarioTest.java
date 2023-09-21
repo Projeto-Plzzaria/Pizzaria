@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @WebAppConfiguration
-public class FuncionarioTeste {
+class FuncionarioTest {
 
     private MockMvc mockMvc;
     @InjectMocks
@@ -44,14 +44,14 @@ public class FuncionarioTeste {
     private FuncionarioRepository funcionarioRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(funcionarioController).build();
     }
 
 
     @Test
-    public void testFuncionario() throws Exception {
+    void testFuncionario() throws Exception {
         when(funcionarioService.listartudo()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/api/Funcionario/lista")
@@ -62,7 +62,7 @@ public class FuncionarioTeste {
 
 
     @Test
-    public void testCadastrarSuccess() throws Exception {
+    void testCadastrarSuccess() throws Exception {
         FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
 
 
@@ -76,11 +76,11 @@ public class FuncionarioTeste {
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
     @Test
-    public void testListaIdSucesso() throws Exception {
+    void testListaIdSucesso() throws Exception {
         Long id = 1L;
         Funcionario funcionario = new Funcionario();
         funcionario.setId(id);
-        funcionario.setCargo(Cargo.cargos);
+        funcionario.setCargo(Cargo.CARGOS);
         funcionario.setEmail("funcionario@hotmail.com");
         funcionario.setNome("Paulin");
 
@@ -91,7 +91,7 @@ public class FuncionarioTeste {
                         .get("/api/Funcionario/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cargo").value("cargos"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cargo").value("CARGOS"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Paulin"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("funcionario@hotmail.com"));
     }

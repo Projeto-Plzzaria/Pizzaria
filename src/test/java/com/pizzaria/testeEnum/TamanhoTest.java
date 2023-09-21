@@ -5,46 +5,46 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TamanhoTest {
+class TamanhoTest {
 
 
     @Test
-    public void testNomeTamanhoPequena() {
+    void testNomeTamanhoPequena() {
         assertEquals("PEQUENA", Tamanho.PEQUENA.name());
     }
 
     @Test
-    public void testNomeTamanhoMedia() {
+    void testNomeTamanhoMedia() {
         assertEquals("MEDIA", Tamanho.MEDIA.name());
     }
 
     @Test
-    public void testNomeTamanhoGrande() {
+    void testNomeTamanhoGrande() {
         assertEquals("GRANDE", Tamanho.GRANDE.name());
     }
 
     @Test
-    public void testNomeTamanhoGigante() {
+    void testNomeTamanhoGigante() {
         assertEquals("GIGANTE", Tamanho.GIGANTE.name());
     }
 
     @Test
-    public void testToStringTamanhoPequena() {
+    void testToStringTamanhoPequena() {
         assertEquals("PEQUENA", Tamanho.PEQUENA.toString());
     }
 
     @Test
-    public void testToStringTamanhoMedia() {
+    void testToStringTamanhoMedia() {
         assertEquals("MEDIA", Tamanho.MEDIA.toString());
     }
 
     @Test
-    public void testToStringTamanhoGrande() {
+    void testToStringTamanhoGrande() {
         assertEquals("GRANDE", Tamanho.GRANDE.toString());
     }
 
     @Test
-    public void testToStringTamanhoGigante() {
+    void testToStringTamanhoGigante() {
         assertEquals("GIGANTE", Tamanho.GIGANTE.toString());
     }
 

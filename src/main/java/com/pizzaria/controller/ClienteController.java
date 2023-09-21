@@ -1,9 +1,5 @@
 package com.pizzaria.controller;
 
-
-import com.pizzaria.dto.BebidaConverter;
-import com.pizzaria.dto.BebidaDTO;
-import com.pizzaria.entity.Bebida;
 import com.pizzaria.repository.ClienteRepository;
 import com.pizzaria.dto.ClienteConverter;
 import com.pizzaria.dto.ClienteDTO;
@@ -77,14 +73,24 @@ public class ClienteController {
             Cliente cliente = ClienteConverter.toEntity(cadastroDTO);
             this.clienteService.cadastrar(cliente);
             return ResponseEntity.ok("Cadastro feito com sucesso");
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
+        } catch (DataIntegrityViolationException | IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){

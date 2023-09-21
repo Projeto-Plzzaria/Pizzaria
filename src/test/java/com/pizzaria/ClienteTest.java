@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @WebAppConfiguration
-public class ClienteTeste {
+class ClienteTest {
 
 
     private MockMvc mockMvc;
@@ -46,13 +46,13 @@ public class ClienteTeste {
     private ClienteRepository clienteRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(clienteController).build();
     }
 
     @Test
-    public void testCliente() throws Exception {
+    void testCliente() throws Exception {
         when(clienteService.listartudo()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/api/Cliente/lista")
@@ -62,7 +62,7 @@ public class ClienteTeste {
     }
 
     @Test
-    public void testCadastrarSuccess() throws Exception {
+    void testCadastrarSuccess() throws Exception {
         ClienteDTO clienteDTO = new ClienteDTO();
 
 
@@ -77,7 +77,7 @@ public class ClienteTeste {
     }
 
     @Test
-    public void testListaIdSucesso() throws Exception {
+    void testListaIdSucesso() throws Exception {
         Long id = 1L;
         Cliente cliente = new Cliente();
         cliente.setId(id);
@@ -93,7 +93,7 @@ public class ClienteTeste {
 
 
     @Test
-    public void testAtualizarClienteExistente() {
+    void testAtualizarClienteExistente() {
         Long id = 1L;
         Cliente clienteExistente = new Cliente();
         clienteExistente.setId(id);
@@ -123,7 +123,7 @@ public class ClienteTeste {
 
 
     @Test
-    public void testDeleteClienteExistente() {
+    void testDeleteClienteExistente() {
         Long id = 1L;
         Cliente clienteExistente = new Cliente();
         clienteExistente.setId(id);
@@ -140,7 +140,7 @@ public class ClienteTeste {
 
 
     @Test
-    public void testAtualizarClienteNaoExistente() {
+    void testAtualizarClienteNaoExistente() {
         Long id = 2L;
         when(clienteRepository.findById(id)).thenReturn(Optional.empty());
         Cliente clienteAtualizadoResultado = clienteService.atualizar(id, new Cliente());
