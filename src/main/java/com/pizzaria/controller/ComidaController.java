@@ -31,13 +31,6 @@ public class ComidaController {
         List<ComidaDTO> listaComidasDTO = ComidaConverter.toDtoList(listaComidas);
         return ResponseEntity.ok(listaComidasDTO);
     }
-
-    @GetMapping("/listar")
-    public ResponseEntity<List<Comida>> listas(){
-        List<Comida> listartudo = comidaService.listartudo();
-        return ResponseEntity.ok(listartudo);
-    }
-
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<ComidaDTO> listaId(@PathVariable(value = "id") Long id) {
         Comida comida = comidaRepository.findById(id).orElse(null);

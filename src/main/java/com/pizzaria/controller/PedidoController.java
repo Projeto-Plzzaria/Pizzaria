@@ -1,5 +1,4 @@
 package com.pizzaria.controller;
-
 import com.pizzaria.service.PedidoService;
 import com.pizzaria.dto.PedidoConverter;
 import com.pizzaria.dto.PedidoDTO;
@@ -11,24 +10,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/Pedido")
 public class PedidoController {
-
         @Autowired
         private PedidoRepository pedidoRepository;
         @Autowired
         private PedidoService pedidoService;
-
-        @GetMapping("/listar")
-        public ResponseEntity<List<Pedido>> listar(){
-        List<Pedido> listartudo = pedidoService.listartudo();
-        return ResponseEntity.ok(listartudo);
-    }
     @GetMapping("/lista")
     public ResponseEntity<List<PedidoDTO>> lista() {
         List<Pedido> listas = pedidoService.listartudo();
@@ -38,11 +29,9 @@ public class PedidoController {
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<PedidoDTO> listaId(@PathVariable(value = "id") Long id) {
         Pedido listaid = pedidoRepository.findById(id).orElse(null);
-
         if (listaid == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-
         PedidoDTO listaDTO = PedidoConverter.toDTO(listaid);
         return ResponseEntity.ok(listaDTO);
     }
@@ -64,7 +53,6 @@ public class PedidoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
         @DeleteMapping("/delete/{id}")
         public ResponseEntity<String> delete(@PathVariable Long id){
         Optional<Pedido> deletarId = pedidoRepository.findById(id);
@@ -85,5 +73,4 @@ public class PedidoController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     }

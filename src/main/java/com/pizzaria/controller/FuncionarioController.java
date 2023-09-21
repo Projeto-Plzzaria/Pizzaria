@@ -32,11 +32,9 @@ private FuncionarioRepository funcionarioRepository;
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<FuncionarioDTO> listaId(@PathVariable(value = "id") Long id) {
         Funcionario listaid = funcionarioRepository.findById(id).orElse(null);
-
         if (listaid == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-
         FuncionarioDTO listaDTO = FuncionarioConverter.toDTO(listaid);
         return ResponseEntity.ok(listaDTO);
     }

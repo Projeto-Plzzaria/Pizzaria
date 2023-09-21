@@ -30,13 +30,6 @@ public class ClienteController {
         List<ClienteDTO> listaClientesDTO = ClienteConverter.toDtoList(listaClientes);
         return ResponseEntity.ok(listaClientesDTO);
     }
-
-    @GetMapping("/listar")
-    public ResponseEntity<List<Cliente>> listas(){
-        List<Cliente> listartudo = clienteService.listartudo();
-        return ResponseEntity.ok(listartudo);
-    }
-
     @GetMapping("/lista/id/{id}")
     public ResponseEntity<ClienteDTO> listaId(@PathVariable(value = "id") Long id) {
         Cliente cliente = clienteRepository.findById(id).orElse(null);

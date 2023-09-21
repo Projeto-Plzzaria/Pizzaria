@@ -19,10 +19,11 @@ public class Bebida extends AbstractEntity {
     @Getter @Setter
     private String sabor;
 
-
     public Bebida() {
+        super();
+    }
 
-        // Construtor vazio pra ser usado no converter e nos testes
-
+    public Bebida(TamanhoB l1, String laranja) {
+        //Somente para os testes
     }
 }

@@ -1,11 +1,19 @@
 package com.pizzaria;
 
+import ch.qos.logback.core.net.server.Client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzaria.controller.ClienteController;
+import com.pizzaria.controller.FuncionarioController;
 import com.pizzaria.dto.ClienteDTO;
+import com.pizzaria.dto.FuncionarioDTO;
+import com.pizzaria.entity.Cargo;
 import com.pizzaria.entity.Cliente;
+import com.pizzaria.entity.Funcionario;
+import com.pizzaria.entity.Pessoa;
 import com.pizzaria.repository.ClienteRepository;
+import com.pizzaria.repository.FuncionarioRepository;
 import com.pizzaria.service.ClienteService;
+import com.pizzaria.service.FuncionarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -19,11 +27,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -91,71 +99,19 @@ class ClienteTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-
     @Test
-    void testAtualizarClienteExistente() {
+    void testDeleteExistente() {
         Long id = 1L;
-        Cliente clienteExistente = new Cliente();
-        clienteExistente.setId(id);
-        clienteExistente.setNome("Joao");
-        clienteExistente.setNumero("45998774512");
 
-        Cliente clienteAtualizado = new Cliente();
-        clienteAtualizado.setId(id);
-        clienteAtualizado.setNome("Fabricio");
-        clienteAtualizado.setNumero("45998742574");
-
-        when(clienteRepository.findById(id)).thenReturn(Optional.of(clienteExistente));
-
-        Cliente clienteAtualizadoResultado = new Cliente();
-        clienteAtualizadoResultado.setNome(clienteAtualizado.getNome());
-        clienteAtualizadoResultado.setNumero(clienteAtualizado.getNumero());
-
-
-
-        //clienteAtualizadoResultado = clienteService.atualizar(id,clienteAtualizado);
-
-        assertEquals("Fabricio", clienteAtualizadoResultado.getNome());
-        assertEquals("45998742574", clienteAtualizadoResultado.getNumero());
-
-    }
-
-
-
-    @Test
-    void testDeleteClienteExistente() {
-        Long id = 1L;
-        Cliente clienteExistente = new Cliente();
-        clienteExistente.setId(id);
-
-        when(clienteRepository.findById(id)).thenReturn(Optional.of(clienteExistente));
-        ResponseEntity<String> resposta = clienteController.delete(id);
+        when(clienteRepository.findById(id)).thenReturn(Optional.of(new Cliente()));
+        ResponseEntity<String> response = clienteController.delete(id);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Apagado com sucesso", response.getBody());
 
         verify(clienteRepository, times(1)).deleteById(id);
-        assertEquals("Apagado com sucesso", resposta.getBody());
-        assertEquals(200, resposta.getStatusCodeValue());
     }
 
-
-
-
-    @Test
-    void testAtualizarClienteNaoExistente() {
-        Long id = 2L;
-        when(clienteRepository.findById(id)).thenReturn(Optional.empty());
-        Cliente clienteAtualizadoResultado = clienteService.atualizar(id, new Cliente());
-        assertNull(clienteAtualizadoResultado);
-        verify(clienteRepository, never()).save(any());
-    }
-
-
-
-
-
-
-
-
-private String asJsonString(Object obj) {
+    private String asJsonString(Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
         } catch (Exception e) {

@@ -23,11 +23,6 @@ public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Endereco>> listar(){
-        List<Endereco> listartudo = enderecoService.listartudo();
-        return ResponseEntity.ok(listartudo);
-    }
     @GetMapping("/lista")
     public ResponseEntity<List<EnderecoDTO>> lista() {
         List<Endereco> listaEnderecos = enderecoService.listartudo();

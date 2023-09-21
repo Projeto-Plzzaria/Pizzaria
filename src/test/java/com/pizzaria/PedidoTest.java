@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,8 +23,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Collections;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -75,7 +77,7 @@ class PedidoTest {
     @Test
     void testListaIdSucesso() throws Exception {
         Long id = 1L;
-        Bebida bebida = new Bebida();
+        Bebida bebida = new Bebida(TamanhoB.L_1, "Laranja");
         bebida.setId(id);
         bebida.setTamanho(TamanhoB.L_1);
         bebida.setSabor("Cola");
@@ -122,6 +124,24 @@ class PedidoTest {
 
 
     }
+
+
+
+    @Test
+    void testDeleteExistente() {
+        Long id = 1L;
+
+        when(pedidoRepository.findById(id)).thenReturn(Optional.of(new Pedido()));
+        ResponseEntity<String> response = pedidoController.delete(id);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Apagado com sucesso", response.getBody());
+
+        verify(pedidoRepository, times(1)).deleteById(id);
+    }
+
+
+
+
 
     private String asJsonString(Object obj) {
         try {

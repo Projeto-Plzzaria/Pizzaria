@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -23,8 +24,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Collections;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -94,6 +96,18 @@ class FuncionarioTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cargo").value("CARGOS"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nome").value("Paulin"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("funcionario@hotmail.com"));
+    }
+
+    @Test
+    void testDeleteExistente() {
+        Long id = 1L;
+
+        when(funcionarioRepository.findById(id)).thenReturn(Optional.of(new Funcionario()));
+        ResponseEntity<String> response = funcionarioController.delete(id);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Apagado com sucesso", response.getBody());
+
+        verify(funcionarioRepository, times(1)).deleteById(id);
     }
 
     private String asJsonString(Object obj) {
