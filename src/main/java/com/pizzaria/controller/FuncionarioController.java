@@ -25,11 +25,6 @@ private FuncionarioRepository funcionarioRepository;
     @Autowired
     private FuncionarioService funcionarioService;
 
-    @GetMapping("/listar")
-    public ResponseEntity<List<Funcionario>> listar(){
-        List<Funcionario> listartudo = funcionarioService.listartudo();
-        return ResponseEntity.ok(listartudo);
-    }
     @GetMapping("/lista")
     public ResponseEntity<List<FuncionarioDTO>> lista() {
         List<Funcionario> listas = funcionarioService.listartudo();

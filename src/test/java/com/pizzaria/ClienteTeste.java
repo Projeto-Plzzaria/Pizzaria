@@ -1,19 +1,11 @@
 package com.pizzaria;
 
-import ch.qos.logback.core.net.server.Client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzaria.controller.ClienteController;
-import com.pizzaria.controller.FuncionarioController;
 import com.pizzaria.dto.ClienteDTO;
-import com.pizzaria.dto.FuncionarioDTO;
-import com.pizzaria.entity.Cargo;
 import com.pizzaria.entity.Cliente;
-import com.pizzaria.entity.Funcionario;
-import com.pizzaria.entity.Pessoa;
 import com.pizzaria.repository.ClienteRepository;
-import com.pizzaria.repository.FuncionarioRepository;
 import com.pizzaria.service.ClienteService;
-import com.pizzaria.service.FuncionarioService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -26,10 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.util.Collections;
 import java.util.Optional;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

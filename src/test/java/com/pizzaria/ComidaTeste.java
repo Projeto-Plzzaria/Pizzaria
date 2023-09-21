@@ -1,4 +1,4 @@
-package com.Pizzaria;
+package com.pizzaria;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

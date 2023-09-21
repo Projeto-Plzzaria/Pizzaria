@@ -1,4 +1,4 @@
-package com.Pizzaria;
+package com.pizzaria;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzaria.controller.BebidaController;
@@ -6,8 +6,6 @@ import com.pizzaria.dto.BebidaDTO;
 import com.pizzaria.entity.Bebida;
 import com.pizzaria.entity.TamanhoB;
 import com.pizzaria.repository.BebidasRepository;
-import com.pizzaria.service.BebidaService;
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import static org.mockito.Mockito.when;
 
@@ -18,12 +16,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.web.WebAppConfiguration;
+import com.pizzaria.service.BebidaService;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +30,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Optional;
 
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -59,12 +56,39 @@ public class BebidaTeste {
 
     @Test
     public void testLista() throws Exception {
+        // Configure o comportamento do serviço mock
         when(bebidaService.listartudo()).thenReturn(Collections.emptyList());
-        mockMvc.perform(get("/api/Bebida/lista")
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/Bebida/lista")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
+
+        // Adicione mais verificações conforme necessário para garantir que o método lista() esteja funcionando corretamente
     }
+    @Test
+    public void testGetterAndSetter() {
+        Bebida bebida = new Bebida();
+
+        // Teste do setter
+        bebida.setSabor("Coca-Cola");
+        assertThat(bebida.getSabor(), is("Coca-Cola"));
+
+        // Adicione testes semelhantes para outros getters e setters
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     @Test
     public void testCadastrarSuccess() throws Exception {
         BebidaDTO bebidaDTO = new BebidaDTO();
@@ -90,7 +114,7 @@ public class BebidaTeste {
                         .get("/api/Bebida/lista/id/" + id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.tamanho").value("_1L"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.tamanho").value("L_1"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.sabor").value("Cola"));
     }
 
@@ -140,4 +164,18 @@ public class BebidaTeste {
             throw new RuntimeException(e);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
