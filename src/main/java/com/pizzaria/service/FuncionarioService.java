@@ -1,5 +1,6 @@
 package com.pizzaria.service;
 
+import com.pizzaria.entity.Endereco;
 import com.pizzaria.entity.Funcionario;
 import com.pizzaria.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,31 @@ public class FuncionarioService {
         return this.funcionarioRepository.save(cadastrar);
     }
 
-    @Transactional(rollbackFor = Exception.class)
+
+
+    /*@Transactional(rollbackFor = Exception.class)
     public void atualizar(Long id, Funcionario atualizar) {
         final Funcionario marcaBanco = this.funcionarioRepository.findById(atualizar.getId()).orElse(null);
         Assert.isTrue(marcaBanco.getId().equals(id) ,"Error id da URL diferente do body");
         Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
         this.funcionarioRepository.save(atualizar);
+    }*/
+
+    public Funcionario atualizar(Long id, Funcionario funcionarioAtualizado) {
+        Funcionario funcionarioExistente = funcionarioRepository.findById(id).orElse(null);
+        if (funcionarioExistente == null) {
+            return null;
+        } else {
+            funcionarioExistente.setNome(funcionarioAtualizado.getNome());
+            funcionarioExistente.setEmail(funcionarioAtualizado.getEmail());
+            funcionarioExistente.setNumero(funcionarioAtualizado.getNumero());
+            funcionarioExistente.setCargo(funcionarioAtualizado.getCargo());
+            return funcionarioRepository.save(funcionarioExistente);
+        }
     }
+
+
+
+
+
 }

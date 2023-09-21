@@ -15,7 +15,7 @@ public class Funcionario extends Pessoa {
 
     @Column(name = "cargo",nullable = false,length = 20)
     private Cargo cargo;
-    @Column(name = "email",nullable = false,length = 20)
+    @Column(name = "email",nullable = false,length = 50)
     private String email;
 
 }
