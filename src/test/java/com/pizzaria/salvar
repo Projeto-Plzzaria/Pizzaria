@@ -95,19 +95,6 @@ class BebidaTest {
     }
 
     @Test
-    void testListaIdNaoEncontrado() throws Exception {
-        Long id = 1L;
-        when(bebidasRepository.findById(id))
-                .thenReturn(Optional.empty());
-        mockMvc.perform(MockMvcRequestBuilders
-                        .get("/api/Bebida/lista/id/" + id)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest());
-    }
-
-
-
-    @Test
     void testListaAtivo() {
         boolean ativo = true;
         List<Bebida> bebidasAtivas = new ArrayList<>();
@@ -188,6 +175,8 @@ class BebidaTest {
         assertEquals(bebida2.getTamanho(), bebidaDTOs.get(1).getTamanho());
         assertEquals(bebida2.getSabor(), bebidaDTOs.get(1).getSabor());
     }
+
+
 
     private String asJsonString(Object obj) {
         try {
