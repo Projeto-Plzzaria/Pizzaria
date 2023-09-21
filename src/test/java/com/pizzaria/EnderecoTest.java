@@ -157,7 +157,7 @@ public class EnderecoTest {
     }
     ///
     @Test
-    public void testDeleteIdNaoEncontrado() throws Exception {
+    void testDeleteIdNaoEncontrado() throws Exception {
         Long id = 2L;
 
         when(Repository.findById(id))

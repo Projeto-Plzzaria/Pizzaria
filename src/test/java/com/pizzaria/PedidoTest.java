@@ -1,6 +1,8 @@
 package com.pizzaria;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pizzaria.dto.BebidaDTO;
+import com.pizzaria.dto.ComidaDTO;
 import com.pizzaria.dto.PedidoDTO;
 import com.pizzaria.entity.*;
 import com.pizzaria.repository.PedidoRepository;
@@ -20,14 +22,15 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -74,6 +77,19 @@ class PedidoTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
+    //////////
+    @Test
+    void testCadastrarIllegalArgumentException() throws Exception {
+        BebidaDTO bebidaDTO = new BebidaDTO();
+        when(pedidoService.cadastrar(any(Pedido.class)))
+                .thenThrow(new IllegalArgumentException("Argumento inválido"));
+
+        mockMvc.perform(post("/api/Pedido/cadastrar")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(bebidaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("ERRO: Argumento inválido"));
+    }
     @Test
     void testListaIdSucesso() throws Exception {
         Long id = 1L;
@@ -119,14 +135,18 @@ class PedidoTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.funcionario.email").value("funcionario@hotmail.com"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cliente.nome").value("Mauricio"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cliente.numero").value("45998874502"));
-
-
-
-
     }
-
-
-
+    //////////
+    @Test
+    void testListaIdNaoEncontrado() throws Exception {
+        Long id = 1L;
+        when(pedidoRepository.findById(id))
+                .thenReturn(Optional.empty());
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/Pedido/lista/id/" + id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
     @Test
     void testDeleteExistente() {
         Long id = 1L;
@@ -138,7 +158,30 @@ class PedidoTest {
 
         verify(pedidoRepository, times(1)).deleteById(id);
     }
+//////////
+    @Test
+    void testListaAtivo() {
+        boolean ativo = true;
+        List<Pedido> Ativas = new ArrayList<>();
+        when(pedidoRepository.findByAtivo(ativo)).thenReturn(Ativas);
+        ResponseEntity<List<PedidoDTO>> response = pedidoController.listaAtivo(ativo);
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(Ativas.size(), response.getBody().size());
+    }
 
+    @Test
+    void testAtualizarComExcecao() {
+        Long id = 1L;
+        PedidoDTO pedidoDTO = new PedidoDTO();
+
+        when(pedidoService.atualizar(eq(id), any()))
+                .thenThrow(new RuntimeException("Erro na atualização"));
+
+        ResponseEntity<?> response = pedidoController.atualizar(id, pedidoDTO);
+
+        assertEquals(400, response.getStatusCodeValue());
+        assertEquals("Erro na atualização", response.getBody());
+    }
 
 
 
