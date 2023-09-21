@@ -24,7 +24,7 @@ public class Comida extends AbstractEntity  {
 
 
 
-    public Comida() {
+    public Comida(Tamanho gigante, String calabresa) {
     //Construtor para teste
     }
 

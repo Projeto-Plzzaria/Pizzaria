@@ -82,7 +82,7 @@ class PedidoTest {
         bebida.setTamanho(TamanhoB.L_1);
         bebida.setSabor("Cola");
 
-        Comida comida = new Comida();
+        Comida comida = new Comida(Tamanho.GIGANTE, "Calabresa");
         comida.setId(id);
         comida.setTamanho(Tamanho.GIGANTE);
 

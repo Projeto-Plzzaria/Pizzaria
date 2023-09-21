@@ -1,6 +1,7 @@
 package com.pizzaria.dto;
 
 import com.pizzaria.entity.Comida;
+import com.pizzaria.entity.Tamanho;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ public class ComidaConverter {
     }
 
     public static Comida toEntity(ComidaDTO dto) {
-        Comida comida = new Comida();
+        Comida comida = new Comida(Tamanho.GIGANTE, "Calabresa");
         comida.setTamanho(dto.getTamanho());
         comida.setIngredientes(dto.getIngredientes());
         return comida;

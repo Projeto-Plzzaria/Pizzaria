@@ -74,6 +74,7 @@ public class BebidaController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PutMapping("/put/id/{id}")
     public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody BebidaDTO dto) {
         try {
@@ -84,5 +85,7 @@ public class BebidaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+
 
 }

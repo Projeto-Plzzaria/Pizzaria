@@ -3,7 +3,9 @@ package com.pizzaria;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzaria.controller.EnderecoController;
+import com.pizzaria.dto.ComidaDTO;
 import com.pizzaria.dto.EnderecoDTO;
+import com.pizzaria.entity.Comida;
 import com.pizzaria.entity.Endereco;
 import com.pizzaria.repository.EnderecoRepository;
 import com.pizzaria.service.EnderecoService;
@@ -13,9 +15,12 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
@@ -28,8 +33,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -73,6 +77,32 @@ public class EnderecoTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
+    ///
+    @Test
+    void testCadastrarDataIntegrityViolationException() throws Exception {
+        EnderecoDTO bebidaDTO = new EnderecoDTO();
+        when(Service.cadastrar(any(Endereco.class)))
+                .thenThrow(new DataIntegrityViolationException("Erro de violação de integridade"));
+
+        mockMvc.perform(post("/api/Endereco/cadastrar")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(bebidaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("ERRO: Erro de violação de integridade"));
+    }
+    @Test
+    void testCadastrarIllegalArgumentException() throws Exception {
+        EnderecoDTO bebidaDTO = new EnderecoDTO();
+        when(Service.cadastrar(any(Endereco.class)))
+                .thenThrow(new IllegalArgumentException("Argumento inválido"));
+
+        mockMvc.perform(post("/api/Endereco/cadastrar")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(bebidaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("ERRO: Argumento inválido"));
+    }
+    ///
     @Test
     void testEndereco() {
         Long id = 1L;
@@ -101,6 +131,18 @@ public class EnderecoTest {
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(Ativas.size(), response.getBody().size());
     }
+    ///
+    @Test
+    void testListaIdNaoEncontrado() throws Exception {
+        Long id = 1L;
+        when(Repository.findById(id))
+                .thenReturn(Optional.empty());
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/api/Endereco/lista/id/" + id)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+    ///
 
     @Test
     void testDeleteExistente() {
@@ -113,6 +155,21 @@ public class EnderecoTest {
 
         verify(Repository, times(1)).deleteById(id);
     }
+    ///
+    @Test
+    public void testDeleteIdNaoEncontrado() throws Exception {
+        Long id = 2L;
+
+        when(Repository.findById(id))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(delete("/api/Endereco/delete/{id}", id))
+                .andExpect(status().isNotFound());
+
+        verify(Repository, times(1)).findById(id);
+        verify(Repository, never()).deleteById(id);
+    }
+////
 
     @Test
     void testAtualizarComSucesso() {
@@ -126,6 +183,21 @@ public class EnderecoTest {
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Atualizado com sucesso!", response.getBody());
     }
+    ////
+    @Test
+    void testAtualizarComExcecao() {
+        Long id = 1L;
+        EnderecoDTO bebidaDTO = new EnderecoDTO();
+
+        when(Service.atualizar(eq(id), any()))
+                .thenThrow(new RuntimeException("Erro na atualização"));
+
+        ResponseEntity<?> response = Controller.atualizar(id, bebidaDTO);
+        assertEquals(400, response.getStatusCodeValue());
+        assertEquals("Erro na atualização", response.getBody());
+    }
+
+    ///
 
 
     private String asJsonString(Object obj) {

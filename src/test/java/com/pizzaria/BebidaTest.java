@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,8 +35,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -77,6 +77,32 @@ class BebidaTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Cadastro feito com sucesso"));
     }
+    @Test
+    void testCadastrarDataIntegrityViolationException() throws Exception {
+        BebidaDTO bebidaDTO = new BebidaDTO();
+        when(bebidaService.cadastrar(any(Bebida.class)))
+                .thenThrow(new DataIntegrityViolationException("Erro de violação de integridade"));
+
+        mockMvc.perform(post("/api/Bebida/cadastrar")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(bebidaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("ERRO: Erro de violação de integridade"));
+    }
+    @Test
+    void testCadastrarIllegalArgumentException() throws Exception {
+        BebidaDTO bebidaDTO = new BebidaDTO();
+        when(bebidaService.cadastrar(any(Bebida.class)))
+                .thenThrow(new IllegalArgumentException("Argumento inválido"));
+
+        mockMvc.perform(post("/api/Bebida/cadastrar")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(bebidaDTO)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("ERRO: Argumento inválido"));
+    }
+
+
     @Test
     void testListaIdSucesso() throws Exception {
         Long id = 1L;
@@ -130,6 +156,20 @@ class BebidaTest {
 
         verify(bebidasRepository, times(1)).deleteById(id);
     }
+    @Test
+    public void testDeleteIdNaoEncontrado() throws Exception {
+        Long id = 2L;
+
+        when(bebidasRepository.findById(id))
+                .thenReturn(Optional.empty());
+
+        mockMvc.perform(delete("/api/Bebida/delete/{id}", id))
+                .andExpect(status().isNotFound());
+
+        verify(bebidasRepository, times(1)).findById(id);
+        verify(bebidasRepository, never()).deleteById(id);
+    }
+
 
     @Test
     void testAtualizarComSucesso() {
@@ -143,7 +183,19 @@ class BebidaTest {
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Atualizado com sucesso!", response.getBody());
     }
+    @Test
+    void testAtualizarComExcecao() {
+        Long id = 1L;
+        BebidaDTO bebidaDTO = new BebidaDTO();
 
+        when(bebidaService.atualizar(eq(id), any()))
+                .thenThrow(new RuntimeException("Erro na atualização"));
+
+        ResponseEntity<?> response = bebidaController.atualizar(id, bebidaDTO);
+
+        assertEquals(400, response.getStatusCodeValue());
+        assertEquals("Erro na atualização", response.getBody());
+    }
 
 
     @Test
