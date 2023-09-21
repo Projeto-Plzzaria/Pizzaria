@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzaria.controller.EnderecoController;
 import com.pizzaria.dto.ComidaDTO;
 import com.pizzaria.dto.EnderecoDTO;
+import com.pizzaria.entity.Cliente;
 import com.pizzaria.entity.Comida;
 import com.pizzaria.entity.Endereco;
+import com.pizzaria.entity.Tamanho;
 import com.pizzaria.repository.EnderecoRepository;
 import com.pizzaria.service.EnderecoService;
 import org.junit.jupiter.api.BeforeEach;
@@ -198,6 +200,25 @@ public class EnderecoTest {
     }
 
     ///
+
+
+    @Test
+    public void testSettersAndGetters() {
+        Cliente cliente = new Cliente();
+        Endereco endereco = new Endereco();
+
+        endereco.setCliente(cliente);
+        endereco.setRua("Rua Teste");
+        endereco.setNumero(123);
+        endereco.setBairro("Bairro Teste");
+
+        assertEquals(cliente, endereco.getCliente());
+        assertEquals("Rua Teste", endereco.getRua());
+        assertEquals(123, endereco.getNumero());
+        assertEquals("Bairro Teste", endereco.getBairro());
+    }
+
+
 
 
     private String asJsonString(Object obj) {
