@@ -157,7 +157,7 @@ class BebidaTest {
         verify(bebidasRepository, times(1)).deleteById(id);
     }
     @Test
-    public void testDeleteIdNaoEncontrado() throws Exception {
+    void testDeleteIdNaoEncontrado() throws Exception {
         Long id = 2L;
 
         when(bebidasRepository.findById(id))

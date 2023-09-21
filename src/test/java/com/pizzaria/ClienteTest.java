@@ -145,7 +145,16 @@ class ClienteTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
     ///
+    @Test
+    void testSettersAndGetters() {
+        Cliente cliente = new Cliente();
 
+        cliente.setNome("Nome do Cliente");
+        cliente.setNumero("123456789");
+
+        assertEquals("Nome do Cliente", cliente.getNome());
+        assertEquals("123456789", cliente.getNumero());
+    }
     @Test
     void testDeleteExistente() {
         Long id = 1L;

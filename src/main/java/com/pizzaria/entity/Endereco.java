@@ -25,4 +25,5 @@ public class Endereco extends AbstractEntity {
 
     @Column(name = "bairro",nullable = false,length = 30)
     private String bairro;
+
 }
