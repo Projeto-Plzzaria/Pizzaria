@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -42,9 +43,9 @@ public class EnderecoTeste {
     @InjectMocks
     private EnderecoController Controller;
 
-    @Mock
+    @MockBean
     private EnderecoService Service;
-    @Mock
+    @MockBean
     private EnderecoRepository Repository;
 
     @BeforeEach

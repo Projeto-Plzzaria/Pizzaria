@@ -5,17 +5,16 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.2</version>
+		<version>3.1.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.Pizzaria</groupId>
-	<artifactId>pizzaria</artifactId>
+	<groupId>com.lembretes</groupId>
+	<artifactId>PizzariaTeste</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>pizzaria</name>
-	<description>projeto da pizzaria back</description>
+	<name>PizzariaTeste</name>
+	<description>Demo project for Spring Boot</description>
 	<properties>
-
-		<java.version>19</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -24,18 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-envers</artifactId>
-			<version>${hibernate.version}</version>
 		</dependency>
 
 		<dependency>
@@ -49,44 +37,33 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>org.jacoco</groupId>
-			<artifactId>jacoco-maven-plugin</artifactId>
-			<version>0.8.10</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.4.0.905</version>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.10</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			    <plugin>
+				      <groupId>org.jacoco</groupId>
+				      <artifactId>jacoco-maven-plugin</artifactId>
+				      <version>0.8.7</version>
+				      <executions>
+				        <execution>
+				          <goals>
+				            <goal>prepare-agent</goal>
+				          </goals>
+				        </execution>
+				        <execution>
+				          <id>report</id>
+				          <phase>prepare-package</phase>
+				          <goals>
+				            <goal>report</goal>
+				          </goals>
+				        </execution>
+				      </executions>
+			    </plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

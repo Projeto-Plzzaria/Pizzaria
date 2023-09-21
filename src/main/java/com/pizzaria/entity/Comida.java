@@ -23,4 +23,15 @@ public class Comida extends AbstractEntity  {
     private List<String> ingredientes;
 
 
+    public Comida(Tamanho media, String queijo, boolean b) {
+        super();
+    }
+
+    public Comida() {
+
+    }
+
+    public <T> Comida(String grande, List<T> asList) {
+        super();
+    }
 }

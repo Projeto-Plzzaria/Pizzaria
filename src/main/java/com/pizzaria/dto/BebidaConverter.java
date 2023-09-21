@@ -1,6 +1,7 @@
 package com.pizzaria.dto;
 
 import com.pizzaria.entity.Bebida;
+import com.pizzaria.entity.TamanhoB;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class BebidaConverter {
     }
 
     public static Bebida toEntity(BebidaDTO dto) {
-        Bebida bebida = new Bebida();
+        Bebida bebida = new Bebida(TamanhoB.L_1, "Laranja");
         bebida.setTamanho(dto.getTamanho());
         bebida.setSabor(dto.getSabor());
         return bebida;

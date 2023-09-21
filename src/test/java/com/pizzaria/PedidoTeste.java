@@ -1,7 +1,6 @@
 package com.pizzaria;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pizzaria.dto.FuncionarioDTO;
 import com.pizzaria.dto.PedidoDTO;
 import com.pizzaria.entity.*;
 import com.pizzaria.repository.PedidoRepository;
@@ -76,7 +75,7 @@ public class PedidoTeste {
     @Test
     public void testListaIdSucesso() throws Exception {
         Long id = 1L;
-        Bebida bebida = new Bebida();
+        Bebida bebida = new Bebida(TamanhoB.L_1, "Laranja");
         bebida.setId(id);
         bebida.setTamanho(TamanhoB.L_1);
         bebida.setSabor("Cola");

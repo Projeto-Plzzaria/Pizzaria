@@ -24,12 +24,7 @@ public class BebidaController {
 
 
 
-    @GetMapping("/lista")
-    public ResponseEntity<List<BebidaDTO>> lista() {
-        List<Bebida> listaBebidas = bebidaService.listartudo();
-        List<BebidaDTO> listaBebidasDTO = BebidaConverter.toDtoList(listaBebidas);
-        return ResponseEntity.ok(listaBebidasDTO);
-    }
+
 
     @GetMapping("/listar")
     public ResponseEntity<List<Bebida>> listas(){

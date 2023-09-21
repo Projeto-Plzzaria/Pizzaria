@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzaria.controller.ComidaController;
 import com.pizzaria.dto.ComidaDTO;
+
 import com.pizzaria.entity.Comida;
 import com.pizzaria.entity.Tamanho;
+
 import com.pizzaria.repository.ComidaRepository;
 import com.pizzaria.service.ComidaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,17 +16,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -97,6 +98,7 @@ public class ComidaTeste {
         assertEquals(Ativas.size(), response.getBody().size());
     }
 
+
     @Test
     public void testDeleteExistente() {
         Long id = 1L;
@@ -109,6 +111,8 @@ public class ComidaTeste {
         verify(Repository, times(1)).deleteById(id);
     }
 
+
+
     @Test
     public void testAtualizarComSucesso() {
         Long id = 1L;
@@ -120,6 +124,42 @@ public class ComidaTeste {
 
         assertEquals(200, response.getStatusCodeValue());
         assertEquals("Atualizado com sucesso!", response.getBody());
+    }
+
+    @Test
+    public void testTamanhoGetterSetter() {
+        Comida comida = new Comida();
+        Tamanho tamanho = Tamanho.GIGANTE;
+        comida.setTamanho(tamanho);
+        assertEquals(tamanho, comida.getTamanho());
+    }
+
+    @Test
+    public void testIngredientesGetterSetter() {
+        Comida comida = new Comida();
+        List<String> ingredientes = Collections.singletonList("Cola");
+        comida.setIngredientes(ingredientes);
+        assertEquals(ingredientes, comida.getIngredientes());
+    }
+    @Test
+    public void testConstructor() {
+        Comida comida = new Comida(Tamanho.MEDIA, "Queijo", true);
+        assertNotNull(comida);
+    }
+
+    @Test
+    public void testConverterListaDeComidasParaListaDeComidaDTOs() {
+        Comida comida1 = new Comida("Média", Arrays.asList("Queijo", "Presunto"));
+        Comida comida2 = new Comida("Grande", Arrays.asList("Pepperoni", "Cogumelos"));
+        List<Comida> comidas = Arrays.asList(comida1, comida2);
+        List<ComidaDTO> comidaDTOs = ComidaDTO.toDtoList(comidas);
+        assertNotNull(comidaDTOs);
+        assertEquals(2, comidaDTOs.size());
+
+        assertEquals(comida1.getTamanho(), comidaDTOs.get(0).getTamanho());
+        assertEquals(comida1.getIngredientes(), comidaDTOs.get(0).getIngredientes());
+        assertEquals(comida2.getTamanho(), comidaDTOs.get(1).getTamanho());
+        assertEquals(comida2.getIngredientes(), comidaDTOs.get(1).getIngredientes());
     }
 
 

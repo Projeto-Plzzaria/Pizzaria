@@ -19,11 +19,11 @@ public class Bebida extends AbstractEntity {
     @Getter @Setter
     private String sabor;
 
-    public Bebida(long l, String bebida1, boolean b) {
+    public Bebida() {
         super();
     }
 
-    public Bebida() {
+    public Bebida(TamanhoB l1, String laranja) {
 
     }
 }
