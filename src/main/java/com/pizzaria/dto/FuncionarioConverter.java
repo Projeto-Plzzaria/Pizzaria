@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
 
 public class FuncionarioConverter {
 
+    private FuncionarioConverter() {
+        // Construtor vazio privado para nao ter instancias.
+    }
+
     public static FuncionarioDTO toDTO(Funcionario funcionario) {
         return new FuncionarioDTO(
                 funcionario.getNome(),

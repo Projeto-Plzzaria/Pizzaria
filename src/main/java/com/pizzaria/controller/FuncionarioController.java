@@ -10,6 +10,7 @@ import com.pizzaria.repository.FuncionarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,11 +33,11 @@ private FuncionarioRepository funcionarioRepository;
         return ResponseEntity.ok(listasDTO);
     }
     @GetMapping("/lista/id/{id}")
-    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<FuncionarioDTO> listaId(@PathVariable(value = "id") Long id) {
         Funcionario listaid = funcionarioRepository.findById(id).orElse(null);
 
         if (listaid == null) {
-            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         FuncionarioDTO listaDTO = FuncionarioConverter.toDTO(listaid);
@@ -49,7 +50,7 @@ private FuncionarioRepository funcionarioRepository;
         return ResponseEntity.ok(listaAtivoDTO);
     }
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody FuncionarioDTO cadastroDTO) {
+    public ResponseEntity<String> cadastrar(@RequestBody FuncionarioDTO cadastroDTO) {
         try {
             Funcionario cadastro = FuncionarioConverter.toEntity(cadastroDTO);
             this.funcionarioService.cadastrar(cadastro);
@@ -74,7 +75,7 @@ private FuncionarioRepository funcionarioRepository;
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody FuncionarioDTO dto) {
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody FuncionarioDTO dto) {
         try {
             Funcionario Atualizado = FuncionarioConverter.toEntity(dto);
             this.funcionarioService.atualizar(id, Atualizado);

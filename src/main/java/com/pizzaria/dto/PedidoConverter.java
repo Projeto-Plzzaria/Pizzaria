@@ -7,6 +7,10 @@ import java.util.stream.Collectors;
 
 public class PedidoConverter {
 
+    private PedidoConverter() {
+        // Construtor vazio privado para nao ter instancias.
+    }
+
     public static PedidoDTO toDTO(Pedido pedido) {
         PedidoDTO pedidoDTO = new PedidoDTO();
         pedidoDTO.setBebida(pedido.getBebida());

@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 public class EnderecoConverter {
 
+    private EnderecoConverter() {
+        // Construtor vazio privado para nao ter instancias.
+    }
+
     public static EnderecoDTO toDto(Endereco endereco) {
         EnderecoDTO dto = new EnderecoDTO();
         dto.setClienteId(endereco.getCliente().getId());

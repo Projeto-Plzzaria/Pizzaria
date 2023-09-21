@@ -1,6 +1,9 @@
 package com.pizzaria.controller;
 
 
+import com.pizzaria.dto.BebidaConverter;
+import com.pizzaria.dto.BebidaDTO;
+import com.pizzaria.entity.Bebida;
 import com.pizzaria.repository.ClienteRepository;
 import com.pizzaria.dto.ClienteConverter;
 import com.pizzaria.dto.ClienteDTO;
@@ -8,6 +11,7 @@ import com.pizzaria.entity.Cliente;
 import com.pizzaria.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,17 +42,25 @@ public class ClienteController {
     }
 
     @GetMapping("/lista/id/{id}")
-    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<ClienteDTO> listaId(@PathVariable(value = "id") Long id) {
         Cliente cliente = clienteRepository.findById(id).orElse(null);
 
         if (cliente == null) {
-            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         ClienteDTO clienteDTO = ClienteConverter.toDto(cliente);
 
         return ResponseEntity.ok(clienteDTO);
     }
+
+
+
+
+
+
+
 
     @GetMapping("/lista/ativo/{ativo}")
     public ResponseEntity<List<ClienteDTO>> listaAtivo(@PathVariable boolean ativo) {
@@ -60,7 +72,7 @@ public class ClienteController {
 
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody ClienteDTO cadastroDTO) {
+    public ResponseEntity<String> cadastrar(@RequestBody ClienteDTO cadastroDTO) {
         try {
             Cliente cliente = ClienteConverter.toEntity(cadastroDTO);
             this.clienteService.cadastrar(cliente);
@@ -85,7 +97,7 @@ public class ClienteController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody ClienteDTO dto) {
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody ClienteDTO dto) {
         try {
             Cliente clienteAtualizado = ClienteConverter.toEntity(dto);
             this.clienteService.atualizar(id, clienteAtualizado);

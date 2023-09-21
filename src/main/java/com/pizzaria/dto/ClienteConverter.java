@@ -7,6 +7,10 @@ import java.util.stream.Collectors;
 
 public class ClienteConverter {
 
+    private ClienteConverter() {
+        // Construtor vazio privado para nao ter instancias.
+    }
+
     public static ClienteDTO toDto(Cliente cliente) {
         ClienteDTO dto = new ClienteDTO();
         dto.setNome(cliente.getNome());

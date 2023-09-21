@@ -7,6 +7,7 @@ import com.pizzaria.repository.EnderecoRepository;
 import com.pizzaria.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -35,11 +36,11 @@ public class EnderecoController {
     }
 
     @GetMapping("/lista/id/{id}")
-    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<EnderecoDTO> listaId(@PathVariable(value = "id") Long id) {
         Endereco endereco = enderecoRepository.findById(id).orElse(null);
 
         if (endereco == null) {
-            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         EnderecoDTO enderecoDTO = EnderecoConverter.toDto(endereco);
@@ -54,7 +55,7 @@ public class EnderecoController {
         return ResponseEntity.ok(listaAtivoDTO);
     }
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody EnderecoDTO cadastroDTO) {
+    public ResponseEntity<String> cadastrar(@RequestBody EnderecoDTO cadastroDTO) {
         try {
             Endereco endereco = EnderecoConverter.toEntity(cadastroDTO);
             this.enderecoService.cadastrar(endereco);
@@ -78,7 +79,7 @@ public class EnderecoController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody EnderecoDTO dto) {
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody EnderecoDTO dto) {
         try {
             Endereco enderecoAtualizado = EnderecoConverter.toEntity(dto);
             this.enderecoService.atualizar(id, enderecoAtualizado);

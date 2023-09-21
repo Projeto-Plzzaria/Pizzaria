@@ -7,6 +7,7 @@ import com.pizzaria.entity.Comida;
 import com.pizzaria.service.ComidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +39,11 @@ public class ComidaController {
     }
 
     @GetMapping("/lista/id/{id}")
-    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<ComidaDTO> listaId(@PathVariable(value = "id") Long id) {
         Comida comida = comidaRepository.findById(id).orElse(null);
 
         if (comida == null) {
-            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
         ComidaDTO comidaDTO = ComidaConverter.toDto(comida);
@@ -60,7 +61,7 @@ public class ComidaController {
 
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody ComidaDTO cadastroDTO) {
+    public ResponseEntity<String> cadastrar(@RequestBody ComidaDTO cadastroDTO) {
         try {
             Comida comida = ComidaConverter.toEntity(cadastroDTO);
             this.comidaService.cadastrar(comida);
@@ -85,7 +86,7 @@ public class ComidaController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody ComidaDTO dto) {
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody ComidaDTO dto) {
         try {
             Comida comidaAtualizada = ComidaConverter.toEntity(dto);
             this.comidaService.atualizar(id, comidaAtualizada);

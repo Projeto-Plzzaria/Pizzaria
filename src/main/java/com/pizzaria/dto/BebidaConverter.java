@@ -7,6 +7,10 @@ import java.util.stream.Collectors;
 
 public class BebidaConverter {
 
+    private BebidaConverter() {
+        // Construtor vazio privado para nao ter instancias.
+    }
+
     public static BebidaDTO toDto(Bebida bebida) {
         BebidaDTO dto = new BebidaDTO();
         dto.setTamanho(bebida.getTamanho());

@@ -7,6 +7,10 @@ import java.util.stream.Collectors;
 
 public class ComidaConverter {
 
+    private ComidaConverter() {
+        // Construtor vazio privado para nao ter instancias.
+    }
+
     public static ComidaDTO toDto(Comida comida) {
         ComidaDTO dto = new ComidaDTO();
         dto.setTamanho(comida.getTamanho());

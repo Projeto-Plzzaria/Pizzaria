@@ -7,6 +7,7 @@ import com.pizzaria.entity.Bebida;
 import com.pizzaria.service.BebidaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -38,14 +39,15 @@ public class BebidaController {
     }
 
     @GetMapping("/lista/id/{id}")
-    public ResponseEntity<?> listaId(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<BebidaDTO> listaId(@PathVariable(value = "id") Long id) {
         Bebida bebida = bebidasRepository.findById(id).orElse(null);
         if (bebida == null) {
-            return ResponseEntity.badRequest().body(" <<ERRO>>: valor não encontrado.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         BebidaDTO bebidaDTO = BebidaConverter.toDto(bebida);
         return ResponseEntity.ok(bebidaDTO);
     }
+
 
     @GetMapping("/lista/ativo/{ativo}")
     public ResponseEntity<List<BebidaDTO>> listaAtivo(@PathVariable boolean ativo) {
@@ -56,19 +58,18 @@ public class BebidaController {
     }
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<?> cadastrar(@RequestBody BebidaDTO cadastroDTO) {
+    public ResponseEntity<String> cadastrar(@RequestBody BebidaDTO cadastroDTO) {
         try {
             Bebida bebida = BebidaConverter.toEntity(cadastroDTO);
             this.bebidaService.cadastrar(bebida);
             return ResponseEntity.ok("Cadastro feito com sucesso");
-        } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
+        } catch (DataIntegrityViolationException | IllegalArgumentException e) {
             return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
@@ -81,7 +82,7 @@ public class BebidaController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody BebidaDTO dto) {
+    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody BebidaDTO dto) {
         try {
             Bebida bebidaAtualizada = BebidaConverter.toEntity(dto);
             this.bebidaService.atualizar(id, bebidaAtualizada);
