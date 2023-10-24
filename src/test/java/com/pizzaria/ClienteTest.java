@@ -204,10 +204,8 @@ class ClienteTest {
     @Test
     public void testSettersAndGetters() {
         Cliente cliente = new Cliente();
-
         cliente.setNome("Nome do Cliente");
         cliente.setNumero("123456789");
-
         assertEquals("Nome do Cliente", cliente.getNome());
         assertEquals("123456789", cliente.getNumero());
     }

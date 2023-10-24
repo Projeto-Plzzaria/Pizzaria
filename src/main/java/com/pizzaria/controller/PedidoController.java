@@ -1,7 +1,7 @@
 package com.pizzaria.controller;
+import com.pizzaria.dto.*;
+
 import com.pizzaria.service.PedidoService;
-import com.pizzaria.dto.PedidoConverter;
-import com.pizzaria.dto.PedidoDTO;
 import com.pizzaria.entity.Pedido;
 import com.pizzaria.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -42,15 +45,21 @@ public class PedidoController {
         return ResponseEntity.ok(listaAtivoDTO);
     }
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrar(@RequestBody PedidoDTO cadastroDTO) {
+    public ResponseEntity<Map<String, String>> cadastrar(@RequestBody PedidoDTO cadastroDTO) {
         try {
-            Pedido cadastro = PedidoConverter.toEntity(cadastroDTO);
-            this.pedidoService.cadastrar(cadastro);
-            return ResponseEntity.ok("Cadastro feito com sucesso");
+            Pedido cad = PedidoConverter.toEntity(cadastroDTO);
+            this.pedidoService.cadastrar(cad);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Cadastro feito com sucesso");
+            return ResponseEntity.ok(response);
         } catch (DataIntegrityViolationException | IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
         @DeleteMapping("/delete/{id}")
