@@ -150,7 +150,9 @@ class FuncionarioTest {
     }
     ///
     @Test
-    public void testDeleteIdNaoEncontrado() throws Exception {
+
+    void testDeleteIdNaoEncontrado() throws Exception {
+
         Long id = 2L;
 
         when(funcionarioRepository.findById(id))

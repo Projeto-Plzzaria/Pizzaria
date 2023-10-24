@@ -33,4 +33,5 @@ public class Pedido extends AbstractEntity  {
 
     @Column(name = "valor",nullable = false)
     private Double valor;
+
 }

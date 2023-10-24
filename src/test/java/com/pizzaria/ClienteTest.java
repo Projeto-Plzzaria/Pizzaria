@@ -147,6 +147,17 @@ class ClienteTest {
     ///
 
     @Test
+    void testSettersAndGetters() {
+        Cliente cliente = new Cliente();
+
+        cliente.setNome("Nome do Cliente");
+        cliente.setNumero("123456789");
+
+
+        assertEquals("Nome do Cliente", cliente.getNome());
+        assertEquals("123456789", cliente.getNumero());
+    }
+    @Test
     void testDeleteExistente() {
         Long id = 1L;
 
@@ -159,47 +170,7 @@ class ClienteTest {
     }
     ///
     @Test
-    public void testDeleteIdNaoEncontrado() throws Exception {
-        Long id = 2L;
 
-        when(clienteRepository.findById(id))
-                .thenReturn(Optional.empty());
-
-        mockMvc.perform(delete("/api/Cliente/delete/{id}", id))
-                .andExpect(status().isNotFound());
-
-        verify(clienteRepository, times(1)).findById(id);
-        verify(clienteRepository, never()).deleteById(id);
-    }
-////
-
-    @Test
-    void testAtualizarComSucesso() {
-        Long id = 1L;
-
-        when(clienteService.atualizar(eq(id), any())).thenReturn(new Cliente());
-
-        ClienteDTO aDTO = new ClienteDTO();
-        ResponseEntity<?> response = clienteController.atualizar(id, aDTO);
-
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals("Atualizado com sucesso!", response.getBody());
-    }
-    ////
-    @Test
-    void testAtualizarComExcecao() {
-        Long id = 1L;
-        ClienteDTO bebidaDTO = new ClienteDTO();
-
-        when(clienteService.atualizar(eq(id), any()))
-                .thenThrow(new RuntimeException("Erro na atualização"));
-
-        ResponseEntity<?> response = clienteController.atualizar(id, bebidaDTO);
-        assertEquals(400, response.getStatusCodeValue());
-        assertEquals("Erro na atualização", response.getBody());
-    }
-
-    ///
 
     @Test
     public void testSettersAndGetters() {

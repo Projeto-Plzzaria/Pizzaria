@@ -1,5 +1,6 @@
 package com.pizzaria.service;
 
+import com.pizzaria.entity.Comida;
 import com.pizzaria.entity.Pedido;
 import com.pizzaria.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,17 @@ public class PedidoService {
         return this.pedidoRepository.save(cadastrar);
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void atualizar(Long id, Pedido atualizar) {
-        final Pedido marcaBanco = this.pedidoRepository.findById(atualizar.getId()).orElse(null);
-        Assert.isTrue(marcaBanco.getId().equals(id) ,"Error id da URL diferente do body");
-        Assert.isTrue(marcaBanco == null || marcaBanco.getId().equals(atualizar.getId()),"nao identificado o registro informado");
-        this.pedidoRepository.save(atualizar);
+    public Pedido atualizar(Long id, Pedido pedidoAtualizado) {
+        Pedido pedidoExistente = pedidoRepository.findById(id).orElse(null);
+        if (pedidoExistente == null) {
+            return null;
+        } else {
+            pedidoExistente.setComida(pedidoAtualizado.getComida());
+            pedidoExistente.setBebida(pedidoAtualizado.getBebida());
+            pedidoExistente.setFuncionario(pedidoAtualizado.getFuncionario());
+            pedidoExistente.setValor(pedidoAtualizado.getValor());
+            pedidoExistente.setCliente(pedidoAtualizado.getCliente());
+            return pedidoRepository.save(pedidoExistente);
+        }
     }
 }
