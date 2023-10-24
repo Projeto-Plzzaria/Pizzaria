@@ -7,9 +7,11 @@ import com.pizzaria.controller.ComidaController;
 import com.pizzaria.dto.BebidaDTO;
 import com.pizzaria.dto.ComidaDTO;
 
+import com.pizzaria.entity.Bebida;
 import com.pizzaria.entity.Comida;
 import com.pizzaria.entity.Tamanho;
 
+import com.pizzaria.entity.TamanhoB;
 import com.pizzaria.repository.ComidaRepository;
 import com.pizzaria.service.ComidaService;
 import org.junit.jupiter.api.BeforeEach;
@@ -226,6 +228,8 @@ class ComidaTest {
         assertEquals(comida2.getTamanho(), comidaDTOs.get(1).getTamanho());
         assertEquals(comida2.getIngredientes(), comidaDTOs.get(1).getIngredientes());
     }
+
+
 
 
     private String asJsonString(Object obj) {
