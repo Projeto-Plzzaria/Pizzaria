@@ -13,22 +13,18 @@ import java.util.List;
 @Entity
 @Audited
 @AuditTable(value = "comidaAudited")
-@Table(name = "comida",schema = "public")
-public class Comida extends AbstractEntity  {
+@Table(name = "comida", schema = "public")
+public class Comida extends AbstractEntity {
 
-
-    @Column(name = "tamanho",nullable = false,length = 10)
+    @Column(name = "tamanho", nullable = false, length = 10)
     private Tamanho tamanho;
-    @Column(name = "qidSabores",nullable = false,length = 50)
-    private List<String> ingredientes;
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sabor", nullable = false)
+    private List<Sabores> sabores;
 
-
-
-    public Comida(Tamanho gigante, String calabresa) {
-    //Construtor para teste
+    public Comida() {
+        // Construtor padrão vazio
     }
 
-    public <T> Comida(String grande, List<T> asList) {
-        super();
-    }
 }

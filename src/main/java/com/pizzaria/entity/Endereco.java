@@ -20,6 +20,9 @@ public class Endereco extends AbstractEntity {
     @Column(name = "rua",nullable = false,length = 50)
     private String rua;
 
+    @Column(name = "clientenome",length = 50)
+    private String clientenome;
+
     @Column(name = "numero",nullable = false)
     private int numero;
 

@@ -15,6 +15,7 @@ public class FuncionarioConverter {
 
     public static FuncionarioDTO toDTO(Funcionario funcionario) {
         return new FuncionarioDTO(
+                funcionario.getId(),
                 funcionario.getNome(),
                 funcionario.getCargo(),
                 funcionario.getEmail(),
@@ -25,6 +26,7 @@ public class FuncionarioConverter {
 
     public static Funcionario toEntity(FuncionarioDTO funcionarioDTO) {
         Funcionario funcionario = new Funcionario();
+        funcionario.setId(funcionarioDTO.getId());
         funcionario.setNome(funcionarioDTO.getNome());
         funcionario.setCargo(funcionarioDTO.getCargo());
         funcionario.setNumero(funcionarioDTO.getNumero());

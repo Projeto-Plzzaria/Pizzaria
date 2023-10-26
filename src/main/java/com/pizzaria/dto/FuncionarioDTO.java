@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class FuncionarioDTO {
+    private Long id;
     private String nome;
     private Cargo cargo;
     private String email;
@@ -16,7 +17,8 @@ public class FuncionarioDTO {
     public FuncionarioDTO() {
     }
 
-    public FuncionarioDTO(String nome, Cargo cargo, String email, String numero) {
+    public FuncionarioDTO(Long id, String nome, Cargo cargo, String email, String numero) {
+        this.id = id;
         this.nome = nome;
         this.cargo = cargo;
         this.email = email;
