@@ -13,6 +13,7 @@ public class ClienteConverter {
 
     public static ClienteDTO toDto(Cliente cliente) {
         ClienteDTO dto = new ClienteDTO();
+        dto.setId(cliente.getId());
         dto.setNome(cliente.getNome());
         dto.setNumero(cliente.getNumero());
         return dto;
@@ -20,6 +21,7 @@ public class ClienteConverter {
 
     public static Cliente toEntity(ClienteDTO dto) {
         Cliente cliente = new Cliente();
+        cliente.setId(dto.getId());
         cliente.setNome(dto.getNome());
         cliente.setNumero(dto.getNumero());
         return cliente;

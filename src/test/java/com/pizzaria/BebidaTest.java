@@ -4,14 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pizzaria.controller.BebidaController;
 import com.pizzaria.dto.BebidaDTO;
 import com.pizzaria.entity.Bebida;
-import com.pizzaria.entity.Endereco;
 import com.pizzaria.entity.TamanhoB;
 import com.pizzaria.repository.BebidasRepository;
 import com.pizzaria.service.BebidaService;
-
 import org.junit.jupiter.api.BeforeEach;
 import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
@@ -24,15 +21,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Optional;
-
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

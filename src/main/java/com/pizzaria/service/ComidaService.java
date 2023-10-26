@@ -27,7 +27,7 @@ public class ComidaService {
             return null;
         } else {
             comidaExistente.setTamanho(comidaAtualizada.getTamanho());
-            comidaExistente.setIngredientes(comidaAtualizada.getIngredientes());
+            comidaExistente.setSabores(comidaAtualizada.getSabores());
             return comidaRepository.save(comidaExistente);
         }
     }

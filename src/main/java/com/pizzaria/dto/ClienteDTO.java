@@ -6,6 +6,8 @@ import lombok.Setter;
 
 public class ClienteDTO {
     @Getter@Setter
+    private Long id;
+    @Getter@Setter
     private String nome;
     @Getter@Setter
     private String numero;
@@ -15,7 +17,8 @@ public class ClienteDTO {
 
     public ClienteDTO() {
     }
-    public ClienteDTO(String nome, String numero, EnderecoDTO endereco) {
+    public ClienteDTO(Long id, String nome, String numero, EnderecoDTO endereco) {
+        this.id = id;
         this.nome = nome;
         this.numero = numero;
         this.endereco = endereco;
