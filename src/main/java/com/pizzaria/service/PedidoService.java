@@ -19,6 +19,14 @@ public class PedidoService {
     }
     @Transactional(rollbackFor = Exception.class)
     public Pedido cadastrar(Pedido cadastrar) {
+/*
+        if(cadastrar.getBebida() != null)
+            for(int i=0; i<cadastrar.getBebida().size(); i++){
+                cadastrar.getBebida().get(i)
+            }
+
+ */
+
         return this.pedidoRepository.save(cadastrar);
     }
 

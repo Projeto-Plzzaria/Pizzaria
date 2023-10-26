@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/Cliente")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ClienteController {
 
     @Autowired

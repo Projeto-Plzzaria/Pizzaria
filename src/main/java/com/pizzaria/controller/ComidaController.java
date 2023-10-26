@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/Comida")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ComidaController {
 
 

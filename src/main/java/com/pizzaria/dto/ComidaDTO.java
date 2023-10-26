@@ -13,15 +13,17 @@ public class ComidaDTO {
     private Tamanho tamanho;
 
     @Getter@Setter
-    private List<String> ingredientes;
-
+    private String ingredientes;
+    @Getter@Setter
+    private Double valor;
 
     public ComidaDTO() {
     }
 
-    public ComidaDTO(Tamanho tamanho, List<String> ingredientes) {
+    public ComidaDTO(Tamanho tamanho, String ingredientes,Double valor) {
         this.tamanho = tamanho;
         this.ingredientes = ingredientes;
+        this.valor = valor;
     }
     public static List<ComidaDTO> toDtoList(List<Comida> comidas) {
         return comidas.stream()

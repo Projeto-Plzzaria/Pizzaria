@@ -15,9 +15,13 @@ public class Bebida extends AbstractEntity {
     @Column(name = "tamanho",nullable = false)
     @Getter @Setter
     private TamanhoB tamanho;
-    @Column(name = "sabor",nullable = false,length = 20)
+    @Column(name = "sabor")
     @Getter @Setter
     private String sabor;
+
+    @Column(name = "valor")
+    @Getter @Setter
+    private Double valor;
 
     public Bebida() {
         super();

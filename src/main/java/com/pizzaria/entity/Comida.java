@@ -20,14 +20,20 @@ public class Comida extends AbstractEntity  {
     @Column(name = "tamanho",nullable = false,length = 10)
     private Tamanho tamanho;
     @Column(name = "qidSabores",nullable = false,length = 50)
-    private List<String> ingredientes;
+    private String ingredientes;
+    @Column(name = "valor")
+    @Getter @Setter
+    private Double valor;
+
 
 
 
     public Comida(Tamanho gigante, String calabresa) {
     //Construtor para teste
     }
-
+    public Comida() {
+        // Construtor sem argumentos
+    }
     public <T> Comida(String grande, List<T> asList) {
         super();
     }
