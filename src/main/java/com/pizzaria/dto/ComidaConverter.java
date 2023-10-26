@@ -16,6 +16,7 @@ public class ComidaConverter {
         ComidaDTO dto = new ComidaDTO();
         dto.setTamanho(comida.getTamanho());
         dto.setIngredientes(comida.getIngredientes());
+        dto.setValor(comida.getValor());
         return dto;
     }
 
@@ -23,6 +24,7 @@ public class ComidaConverter {
         Comida comida = new Comida(Tamanho.GIGANTE, "Calabresa");
         comida.setTamanho(dto.getTamanho());
         comida.setIngredientes(dto.getIngredientes());
+        comida.setValor(dto.getValor());
         return comida;
     }
 

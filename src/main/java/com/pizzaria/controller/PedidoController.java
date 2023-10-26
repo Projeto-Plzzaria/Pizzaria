@@ -4,6 +4,7 @@ import com.pizzaria.dto.*;
 import com.pizzaria.service.PedidoService;
 import com.pizzaria.entity.Pedido;
 import com.pizzaria.repository.PedidoRepository;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/Pedido")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PedidoController {
         @Autowired
         private PedidoRepository pedidoRepository;
@@ -45,18 +47,21 @@ public class PedidoController {
         return ResponseEntity.ok(listaAtivoDTO);
     }
     @PostMapping("/cadastrar")
-    public ResponseEntity<Map<String, String>> cadastrar(@RequestBody PedidoDTO cadastroDTO) {
+    public ResponseEntity<Map<String, String>> cadastrar(@RequestBody Pedido cad) {
         try {
-            Pedido cad = PedidoConverter.toEntity(cadastroDTO);
+
             this.pedidoService.cadastrar(cad);
             Map<String, String> response = new HashMap<>();
             response.put("message", "Cadastro feito com sucesso");
             return ResponseEntity.ok(response);
         } catch (DataIntegrityViolationException | IllegalArgumentException e) {
+            System.out.println(e.getMessage());
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "ERRO: " + e.getMessage());
+
             return ResponseEntity.badRequest().body(errorResponse);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
@@ -73,13 +78,13 @@ public class PedidoController {
         }
     }
     @PutMapping("/put/id/{id}")
-    public ResponseEntity<String> atualizar(@PathVariable Long id, @RequestBody PedidoDTO dto) {
+    public ResponseEntity<Menssage> atualizar(@PathVariable Long id, @RequestBody Pedido atualizado) {
         try {
-            Pedido atualizado = PedidoConverter.toEntity(dto);
             this.pedidoService.atualizar(id, atualizado);
-            return ResponseEntity.ok().body("Atualizado com sucesso!");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.ok().body(new Menssage("atualizado com sucesso"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().body(new Menssage(e.getMessage()));
         }
     }
     }

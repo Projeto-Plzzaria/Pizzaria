@@ -15,10 +15,10 @@ public abstract class AbstractEntity {
     private Long id;
     @Getter
     @Setter
-    @Column(name = "ativo",nullable = false)
+    @Column(name = "ativo")
     private  boolean ativo;
     @Getter@Setter
-    @Column(name = "cadastro",nullable = false)
+    @Column(name = "cadastro")
 
     private LocalDateTime cadastro;
     @Getter@Setter

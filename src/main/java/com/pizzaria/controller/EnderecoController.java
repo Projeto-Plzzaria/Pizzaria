@@ -21,6 +21,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/Endereco")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EnderecoController {
     @Autowired
     private EnderecoRepository enderecoRepository;

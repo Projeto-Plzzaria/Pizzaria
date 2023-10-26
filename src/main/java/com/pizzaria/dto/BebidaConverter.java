@@ -15,6 +15,7 @@ public class BebidaConverter {
         BebidaDTO dto = new BebidaDTO();
         dto.setTamanho(bebida.getTamanho());
         dto.setSabor(bebida.getSabor());
+        dto.setValor(bebida.getValor());
         return dto;
     }
 
@@ -22,6 +23,7 @@ public class BebidaConverter {
         Bebida bebida = new Bebida();
         bebida.setTamanho(dto.getTamanho());
         bebida.setSabor(dto.getSabor());
+        bebida.setValor(dto.getValor());
         return bebida;
     }
 

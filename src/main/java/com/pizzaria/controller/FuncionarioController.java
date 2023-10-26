@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/Funcionario")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FuncionarioController {
     @Autowired
 private FuncionarioRepository funcionarioRepository;

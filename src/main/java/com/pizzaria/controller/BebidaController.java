@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/Bebida")
-@CrossOrigin(origins = "http://localhost:62313")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BebidaController {
     @Autowired
     private BebidasRepository bebidasRepository;
