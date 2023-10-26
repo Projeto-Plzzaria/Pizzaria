@@ -21,6 +21,7 @@ public class PedidoConverter {
         pedidoDTO.setCliente(pedido.getCliente());
         pedidoDTO.setValor(pedido.getValor());
         pedidoDTO.setId(pedido.getId());
+        pedidoDTO.setObs(pedido.getObs());
         return pedidoDTO;
     }
 
@@ -32,6 +33,7 @@ public class PedidoConverter {
         pedido.setCliente(pedidoDTO.getCliente());
         pedido.setValor(pedidoDTO.getValor());
         pedido.setId(pedidoDTO.getId());
+        pedido.setObs(pedidoDTO.getObs());
         return pedido;
     }
 

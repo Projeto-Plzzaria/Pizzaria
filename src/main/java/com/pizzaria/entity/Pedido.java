@@ -18,8 +18,10 @@ import java.util.List;
 
 public class Pedido extends AbstractEntity  {
 
-
-
+    @Getter
+    @Setter
+    @Column(name = "obs",length = 100)
+    private String obs;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "comida_produto",
             joinColumns = @JoinColumn(name = "pedido_id"),
@@ -30,10 +32,10 @@ public class Pedido extends AbstractEntity  {
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Bebida> bebida;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "funcionario")
     private Funcionario funcionario;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cliente")
     private Cliente cliente;
 
