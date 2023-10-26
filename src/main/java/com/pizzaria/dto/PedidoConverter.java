@@ -1,5 +1,7 @@
 package com.pizzaria.dto;
 
+import com.pizzaria.entity.Bebida;
+import com.pizzaria.entity.Comida;
 import com.pizzaria.entity.Pedido;
 
 import java.util.List;
@@ -13,21 +15,23 @@ public class PedidoConverter {
 
     public static PedidoDTO toDTO(Pedido pedido) {
         PedidoDTO pedidoDTO = new PedidoDTO();
-        pedidoDTO.setBebida(pedido.getBebida());
-        pedidoDTO.setComida(pedido.getComida());
+        pedidoDTO.setBebida((List<Bebida>) pedido.getBebida());
+        pedidoDTO.setComida((List<Comida>) pedido.getComida());
         pedidoDTO.setFuncionario(pedido.getFuncionario());
         pedidoDTO.setCliente(pedido.getCliente());
         pedidoDTO.setValor(pedido.getValor());
+        pedidoDTO.setId(pedido.getId());
         return pedidoDTO;
     }
 
     public static Pedido toEntity(PedidoDTO pedidoDTO) {
         Pedido pedido = new Pedido();
-        pedido.setBebida(pedidoDTO.getBebida());
-        pedido.setComida(pedidoDTO.getComida());
+        pedido.setBebida((List<Bebida>) pedidoDTO.getBebida());
+        pedido.setComida((List<Comida>) pedidoDTO.getComida());
         pedido.setFuncionario(pedidoDTO.getFuncionario());
         pedido.setCliente(pedidoDTO.getCliente());
-        pedido.setValor(pedidoDTO.getValor()); // Corrigido aqui
+        pedido.setValor(pedidoDTO.getValor());
+        pedido.setId(pedidoDTO.getId());
         return pedido;
     }
 

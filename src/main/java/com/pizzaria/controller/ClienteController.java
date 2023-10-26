@@ -1,5 +1,8 @@
 package com.pizzaria.controller;
 
+import com.pizzaria.dto.BebidaConverter;
+import com.pizzaria.dto.BebidaDTO;
+import com.pizzaria.entity.Bebida;
 import com.pizzaria.repository.ClienteRepository;
 import com.pizzaria.dto.ClienteConverter;
 import com.pizzaria.dto.ClienteDTO;
@@ -12,11 +15,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:4200")
 @Controller
 @RequestMapping(value = "/api/Cliente")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ClienteController {
 
     @Autowired
@@ -61,22 +67,23 @@ public class ClienteController {
 
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrar(@RequestBody ClienteDTO cadastroDTO) {
+    public ResponseEntity<Map<String, String>> cadastrar(@RequestBody ClienteDTO cadastroDTO) {
         try {
-            Cliente cliente = ClienteConverter.toEntity(cadastroDTO);
-            this.clienteService.cadastrar(cliente);
-            return ResponseEntity.ok("Cadastro feito com sucesso");
+            Cliente cad = ClienteConverter.toEntity(cadastroDTO);
+            this.clienteService.cadastrar(cad);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Cadastro feito com sucesso");
+            return ResponseEntity.ok(response);
         } catch (DataIntegrityViolationException | IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
-
-
-
-
-
 
 
 

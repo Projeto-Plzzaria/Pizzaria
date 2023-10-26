@@ -17,7 +17,9 @@ public class ComidaConverter {
         ComidaDTO dto = new ComidaDTO();
         dto.setId(comida.getId());
         dto.setTamanho(comida.getTamanho());
+
         dto.setSabores(comida.getSabores());
+
         return dto;
     }
 
@@ -25,7 +27,9 @@ public class ComidaConverter {
         Comida comida = new Comida();
         comida.setId(dto.getId());
         comida.setTamanho(dto.getTamanho());
+
         comida.setSabores(dto.getSabores());
+
         return comida;
     }
 

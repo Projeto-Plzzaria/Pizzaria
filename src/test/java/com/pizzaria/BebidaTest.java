@@ -207,7 +207,6 @@ class BebidaTest {
         assertEquals(sabor, bebida.getSabor());
     }
 
-
     @Test
     void testConstructor() {
         Bebida bebida = new Bebida();

@@ -18,10 +18,12 @@ public class Comida extends AbstractEntity {
 
     @Column(name = "tamanho", nullable = false, length = 10)
     private Tamanho tamanho;
+
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @Column(name = "sabor", nullable = false)
     private List<Sabores> sabores;
+
 
     public Comida() {
         // Construtor padrão vazio

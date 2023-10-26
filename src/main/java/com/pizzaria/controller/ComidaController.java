@@ -12,11 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:4200")
 @Controller
 @RequestMapping(value = "/api/Comida")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ComidaController {
 
 
@@ -54,17 +57,24 @@ public class ComidaController {
 
 
     @PostMapping("/cadastrar")
-    public ResponseEntity<String> cadastrar(@RequestBody ComidaDTO cadastroDTO) {
+    public ResponseEntity<Map<String, String>> cadastrar(@RequestBody ComidaDTO cadastroDTO) {
         try {
-            Comida comida = ComidaConverter.toEntity(cadastroDTO);
-            this.comidaService.cadastrar(comida);
-            return ResponseEntity.ok("Cadastro feito com sucesso");
+            Comida cad = ComidaConverter.toEntity(cadastroDTO);
+            this.comidaService.cadastrar(cad);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Cadastro feito com sucesso");
+            return ResponseEntity.ok(response);
         } catch (DataIntegrityViolationException | IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("ERRO: " + e.getMessage());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", "ERRO: " + e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.badRequest().body(errorResponse);
         }
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){

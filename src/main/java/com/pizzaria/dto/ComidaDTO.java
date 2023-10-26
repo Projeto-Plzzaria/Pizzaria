@@ -18,13 +18,16 @@ public class ComidaDTO {
     @Getter @Setter
     private List<Sabores> sabores;
 
+
     public ComidaDTO() {
     }
+
 
     public ComidaDTO(Long id, Tamanho tamanho, List<Sabores> sabores) {
         this.id = id;
         this.tamanho = tamanho;
         this.sabores = sabores;
+
     }
 
     public static List<ComidaDTO> toDtoList(List<Comida> comidas) {
