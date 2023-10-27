@@ -16,6 +16,7 @@ public class PedidoDTO {
 
     private List<Bebida> bebida;
     private List<Comida> comida;
+    private String obs;
     private Funcionario funcionario;
     private Cliente cliente;
     private Double valor;
@@ -23,7 +24,8 @@ public class PedidoDTO {
     public PedidoDTO() {
     }
 
-    public PedidoDTO(List<Comida> comida,Long id, List<Bebida> bebida, Funcionario funcionario, Cliente cliente, Double valor) {
+    public PedidoDTO(List<Comida> comida,String obs, Long id, List<Bebida> bebida, Funcionario funcionario, Cliente cliente, Double valor) {
+        this.obs = obs;
         this.comida = comida;
         this.bebida = bebida;
         this.funcionario = funcionario;

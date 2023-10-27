@@ -30,12 +30,14 @@ public class Pedido extends AbstractEntity  {
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Bebida> bebida;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "funcionario")
     private Funcionario funcionario;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "cliente")
     private Cliente cliente;
+    @Column(name = "obs", length = 100)
+    private String obs;
 
     @Column(name = "valor")
     private Double valor;

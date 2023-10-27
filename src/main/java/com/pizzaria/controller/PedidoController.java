@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@CrossOrigin(origins = "http://localhost:4200")
 @Controller
 @RequestMapping(value = "/api/Pedido")
 @CrossOrigin(origins = "http://localhost:4200")

@@ -16,14 +16,14 @@ public class ComidaDTO {
     private Tamanho tamanho;
 
     @Getter @Setter
-    private List<Sabores> sabores;
+    private Sabores sabores;
 
 
     public ComidaDTO() {
     }
 
 
-    public ComidaDTO(Long id, Tamanho tamanho, List<Sabores> sabores) {
+    public ComidaDTO(Long id, Tamanho tamanho, Sabores sabores) {
         this.id = id;
         this.tamanho = tamanho;
         this.sabores = sabores;

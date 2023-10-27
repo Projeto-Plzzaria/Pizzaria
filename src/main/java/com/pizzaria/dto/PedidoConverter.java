@@ -16,6 +16,7 @@ public class PedidoConverter {
     public static PedidoDTO toDTO(Pedido pedido) {
         PedidoDTO pedidoDTO = new PedidoDTO();
         pedidoDTO.setBebida((List<Bebida>) pedido.getBebida());
+        pedidoDTO.setObs(pedido.getObs());
         pedidoDTO.setComida((List<Comida>) pedido.getComida());
         pedidoDTO.setFuncionario(pedido.getFuncionario());
         pedidoDTO.setCliente(pedido.getCliente());
@@ -26,6 +27,7 @@ public class PedidoConverter {
 
     public static Pedido toEntity(PedidoDTO pedidoDTO) {
         Pedido pedido = new Pedido();
+        pedido.setObs(pedidoDTO.getObs());
         pedido.setBebida((List<Bebida>) pedidoDTO.getBebida());
         pedido.setComida((List<Comida>) pedidoDTO.getComida());
         pedido.setFuncionario(pedidoDTO.getFuncionario());
