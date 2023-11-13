@@ -13,6 +13,7 @@ public class BebidaConverter {
 
     public static BebidaDTO toDto(Bebida bebida) {
         BebidaDTO dto = new BebidaDTO();
+        dto.setId(bebida.getId());
         dto.setTamanho(bebida.getTamanho());
         dto.setSabor(bebida.getSabor());
         dto.setValor(bebida.getValor());
@@ -21,6 +22,7 @@ public class BebidaConverter {
 
     public static Bebida toEntity(BebidaDTO dto) {
         Bebida bebida = new Bebida();
+        bebida.setId(dto.getId());
         bebida.setTamanho(dto.getTamanho());
         bebida.setSabor(dto.getSabor());
         bebida.setValor(dto.getValor());

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BebidaDTO {
+    @Getter @Setter
+    private Long id;
     @Getter@Setter
     private TamanhoB tamanho;
     @Getter@Setter
@@ -18,7 +20,8 @@ public class BebidaDTO {
 
     public BebidaDTO() {
     }
-    public BebidaDTO(TamanhoB tamanho, String sabor,Double valor) {
+    public BebidaDTO(Long id, TamanhoB tamanho, String sabor,Double valor) {
+        this.id = id;
         this.tamanho = tamanho;
         this.sabor = sabor;
         this.valor = valor;
