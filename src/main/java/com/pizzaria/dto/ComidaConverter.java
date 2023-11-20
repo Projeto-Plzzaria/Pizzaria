@@ -1,8 +1,6 @@
 package com.pizzaria.dto;
 
 import com.pizzaria.entity.Comida;
-import com.pizzaria.entity.Tamanho;
-import com.pizzaria.entity.Sabores;  // Importe a classe Sabores se ainda não tiver importado
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +15,9 @@ public class ComidaConverter {
         ComidaDTO dto = new ComidaDTO();
         dto.setId(comida.getId());
         dto.setTamanho(comida.getTamanho());
-        dto.setSabores(comida.getSabores());
+        dto.setSaborum(comida.getSaborum());
+        dto.setSabordois(comida.getSabordois());
+        dto.setSabortres(comida.getSabortres());
 
         return dto;
     }
@@ -26,7 +26,9 @@ public class ComidaConverter {
         Comida comida = new Comida();
         comida.setId(dto.getId());
         comida.setTamanho(dto.getTamanho());
-        comida.setSabores(dto.getSabores());
+        comida.setSaborum(dto.getSaborum());
+        comida.setSabordois(dto.getSabordois());
+        comida.setSabortres(dto.getSabortres());
 
         return comida;
     }

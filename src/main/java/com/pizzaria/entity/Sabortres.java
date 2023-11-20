@@ -1,5 +1,5 @@
 package com.pizzaria.entity;
-public enum Sabores {
+public enum Sabortres {
     Frango_com_Catupiry,
     Portuguesa,
     Calabresa,
@@ -7,5 +7,7 @@ public enum Sabores {
     Strogonoff_de_Carne,
     Chocolate,
     Banana,
-    Pepperoni
+    Pepperoni,
+
+    Nenhum
 }

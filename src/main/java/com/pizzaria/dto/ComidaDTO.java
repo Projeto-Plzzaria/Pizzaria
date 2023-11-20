@@ -1,8 +1,6 @@
 package com.pizzaria.dto;
 
-import com.pizzaria.entity.Comida;
-import com.pizzaria.entity.Tamanho;
-import com.pizzaria.entity.Sabores;  // Importe a classe Sabores se ainda não tiver importado
+import com.pizzaria.entity.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,17 +14,25 @@ public class ComidaDTO {
     private Tamanho tamanho;
 
     @Getter @Setter
-    private Sabores sabores;
+    private Saborum saborum;
+
+    @Getter @Setter
+    private Sabordois sabordois;
+
+    @Getter @Setter
+    private Sabortres sabortres;
 
 
     public ComidaDTO() {
     }
 
 
-    public ComidaDTO(Long id, Tamanho tamanho, Sabores sabores) {
+    public ComidaDTO(Long id, Tamanho tamanho, Saborum saborum, Sabordois sabordois, Sabortres sabortres) {
         this.id = id;
         this.tamanho = tamanho;
-        this.sabores = sabores;
+        this.saborum = saborum;
+        this.sabordois = sabordois;
+        this.sabortres = sabortres;
 
     }
 
