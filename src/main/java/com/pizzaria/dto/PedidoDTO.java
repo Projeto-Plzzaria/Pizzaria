@@ -15,18 +15,18 @@ public class PedidoDTO {
     private List<Comida> comida;
     private String obs;
     private Funcionario funcionario;
-    private Endereco endereco;
+    private Cliente cliente;
     private Double valor;
 
     public PedidoDTO() {
     }
 
-    public PedidoDTO(List<Comida> comida,String obs, Long id, List<Bebida> bebida, Funcionario funcionario, Endereco endereco, Double valor) {
+    public PedidoDTO(List<Comida> comida,String obs, Long id, List<Bebida> bebida, Funcionario funcionario, Cliente cliente, Double valor) {
         this.obs = obs;
         this.comida = comida;
         this.bebida = bebida;
         this.funcionario = funcionario;
-        this.endereco = endereco;
+        this.cliente = cliente;
         this.valor = valor;
         this.id = id;
     }

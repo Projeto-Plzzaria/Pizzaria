@@ -1,12 +1,10 @@
 package com.pizzaria.service;
 
-import com.pizzaria.entity.Endereco;
 import com.pizzaria.entity.Funcionario;
 import com.pizzaria.repository.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 
 import java.util.List;
 @Service

@@ -20,22 +20,22 @@ public class Pedido extends AbstractEntity  {
 
 
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "comida_produto",
             joinColumns = @JoinColumn(name = "pedido_id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id"))
     private List<Comida> comida;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = " bebida_Produto",
             joinColumns = @JoinColumn(name = "pedido_id"),
-            inverseJoinColumns = @JoinColumn(name = "produto_id"))
+            inverseJoinColumns = @JoinColumn(name = "produto2_id"))
     private List<Bebida> bebida;
     @ManyToOne
     @JoinColumn(name = "funcionario")
     private Funcionario funcionario;
     @ManyToOne
-    @JoinColumn(name = "endereco")
-    private Endereco endereco;
+    @JoinColumn(name = "cliente")
+    private Cliente cliente;
     @Column(name = "obs", length = 100)
     private String obs;
 
