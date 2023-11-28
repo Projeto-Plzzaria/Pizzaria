@@ -20,12 +20,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String login;
+    private String username;
     private String password;
     private UserRole role;
 
-    public User(String login, String password, UserRole role){
-        this.login = login;
+    public User(String username, String password, UserRole role){
+        this.username = username;
         this.password = password;
         this.role = role;
     }
@@ -38,7 +38,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return username;
     }
 
     @Override
