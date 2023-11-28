@@ -40,7 +40,7 @@ public class PedidoService {
             pedidoExistente.setBebida(pedidoAtualizado.getBebida());
             pedidoExistente.setFuncionario(pedidoAtualizado.getFuncionario());
             pedidoExistente.setValor(pedidoAtualizado.getValor());
-            pedidoExistente.setCliente(pedidoAtualizado.getCliente());
+            pedidoExistente.setEndereco(pedidoAtualizado.getEndereco());
             return pedidoRepository.save(pedidoExistente);
         }
     }

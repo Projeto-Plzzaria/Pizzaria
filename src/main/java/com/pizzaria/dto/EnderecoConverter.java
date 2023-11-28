@@ -15,7 +15,7 @@ public class EnderecoConverter {
     public static EnderecoDTO toDto(Endereco endereco) {
         EnderecoDTO dto = new EnderecoDTO();
         dto.setId(endereco.getId());
-        dto.setClienteId(endereco.getCliente().getId());
+        dto.setCliente(endereco.getCliente());
         dto.setClientenome(endereco.getCliente().getNome());
         dto.setRua(endereco.getRua());
         dto.setNumero(endereco.getNumero());
@@ -27,8 +27,7 @@ public class EnderecoConverter {
         Endereco endereco = new Endereco();
         Cliente cliente = new Cliente();
         cliente.setId(dto.getId());
-        cliente.setId(dto.getClienteId());
-        endereco.setCliente(cliente);
+        endereco.setCliente(dto.getCliente());
         endereco.setRua(dto.getRua());
         endereco.setClientenome(dto.getClientenome());
         endereco.setNumero(dto.getNumero());

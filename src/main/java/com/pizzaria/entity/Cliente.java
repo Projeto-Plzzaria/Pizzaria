@@ -16,7 +16,5 @@ import java.util.List;
 @AuditTable(value = "clienteAudited")
 @Table(name = "cliente",schema = "public")
 public class Cliente extends Pessoa {
-    @OneToMany(mappedBy = "cliente")
-    @Getter@Setter
-    private List<Endereco> enderecos = new ArrayList<>();
+
 }

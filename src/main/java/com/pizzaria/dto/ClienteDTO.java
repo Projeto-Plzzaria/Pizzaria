@@ -11,16 +11,12 @@ public class ClienteDTO {
     private String nome;
     @Getter@Setter
     private String numero;
-    @Getter@Setter
-    private EnderecoDTO endereco;
-
 
     public ClienteDTO() {
     }
-    public ClienteDTO(Long id, String nome, String numero, EnderecoDTO endereco) {
+    public ClienteDTO(Long id, String nome, String numero) {
         this.id = id;
         this.nome = nome;
         this.numero = numero;
-        this.endereco = endereco;
     }
 }

@@ -15,18 +15,18 @@ import org.hibernate.envers.Audited;
 
 public class Endereco extends AbstractEntity {
     @ManyToOne
-    @JoinColumn(name = "cliente", nullable = false)
+    @JoinColumn(name = "cliente")
     private Cliente cliente;
-    @Column(name = "rua",nullable = false,length = 50)
+    @Column(name = "rua", length = 50)
     private String rua;
 
     @Column(name = "clientenome",length = 50)
     private String clientenome;
 
-    @Column(name = "numero",nullable = false)
+    @Column(name = "numero")
     private int numero;
 
-    @Column(name = "bairro",nullable = false,length = 30)
+    @Column(name = "bairro", length = 30)
     private String bairro;
 
 }

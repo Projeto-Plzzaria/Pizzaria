@@ -1,5 +1,7 @@
 package com.pizzaria.entity;
 
 public enum Cargo {
-    CARGOS;
+    Caixa,
+    Pizzaiolo,
+    Entregador
 }

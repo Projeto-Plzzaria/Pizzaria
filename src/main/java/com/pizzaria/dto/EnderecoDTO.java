@@ -1,5 +1,6 @@
 package com.pizzaria.dto;
 
+import com.pizzaria.entity.Cliente;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ public class EnderecoDTO {
     @Getter @Setter
     private Long id;
     @Getter @Setter
-    private Long clienteId;
+    private Cliente cliente;
     @Getter @Setter
     private String clientenome;
     @Getter @Setter
@@ -21,10 +22,10 @@ public class EnderecoDTO {
     public EnderecoDTO() {
     }
 
-    public EnderecoDTO(Long id, Long clienteId, String clientenome, String rua, int numero, String bairro) {
+    public EnderecoDTO(Long id, Cliente cliente, String clientenome, String rua, int numero, String bairro) {
         this.id = id;
         this.clientenome = clientenome;
-        this.clienteId = clienteId;
+        this.cliente = cliente;
         this.rua = rua;
         this.numero = numero;
         this.bairro = bairro;

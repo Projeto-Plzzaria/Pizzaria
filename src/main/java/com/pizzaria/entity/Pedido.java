@@ -34,8 +34,8 @@ public class Pedido extends AbstractEntity  {
     @JoinColumn(name = "funcionario")
     private Funcionario funcionario;
     @ManyToOne
-    @JoinColumn(name = "cliente")
-    private Cliente cliente;
+    @JoinColumn(name = "endereco")
+    private Endereco endereco;
     @Column(name = "obs", length = 100)
     private String obs;
 
